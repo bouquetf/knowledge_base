@@ -2,9 +2,7 @@
 
 Speaker: Aurélie Le guillou
 
-++++
-<iframe width="560" height="315" src="https://www.youtube.com/embed/e6pRwrdY0P4?si=gsM-f-nlTcGCAugf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-++++
+image:https://img.youtube.com/vi/e6pRwrdY0P4/maxresdefault.jpg[link=https://youtu.be/e6pRwrdY0P4]
 
 ChatGpt au service des user stories
 

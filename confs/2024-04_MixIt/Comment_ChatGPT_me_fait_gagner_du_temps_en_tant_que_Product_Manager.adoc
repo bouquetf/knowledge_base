@@ -6,8 +6,6 @@ Speaker: Aurélie Le guillou
 <iframe width="560" height="315" src="https://www.youtube.com/embed/e6pRwrdY0P4?si=gsM-f-nlTcGCAugf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ++++
 
-video::e6pRwrdY0P4[youtube]
-
 ChatGpt au service des user stories
 
 Les usages de l'IA ont changé en 6 mois.

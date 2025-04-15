@@ -1,0 +1,111 @@
+= Comment ChatGPT me fait gagner du temps en tant que Product Manager
+
+Speaker: Aurélie Le guillou
+
+video::e6pRwrdY0P4[youtube]
+
+ChatGpt au service des user stories
+
+Les usages de l'IA ont changé en 6 mois.
+
+L'IA est comme la lampu du génie, pour bien l'utiliser, il faut bien la frotter. 
+
+Approche plus créative que les anciennes applications. "Comment est-ce que tu peux m'aider à … ?"
+
+. Poser le contexte pour poser une question
+. Idée : demander des exemples
+  Prend 3 minutes plutôt que 30 minutes, mais vérifier qu'il n'y a pas d'hallucination.
+. Lui demander de générer une base de travail à retravailler. Exemple : product vision.
+. À partir d'une liste théorique. ex: lois UX. de donner des exemple d'application.
+. Rafiner à partir d'une liste, extirper les étapes intermédiaires
+. Orienter les réponses : métaphores, nombre de propositions, style, …
+
+[note]
+====
+fouiller user journey map
+====
+
+== Exemple: Cycle produit
+
+:sectnums: 
+
+=== Product discovery
+
+- Demander de générer des questionnaires
+- Déroulés en fonction de personnes
+- Générer Typeform, … (plugins)
+- Demander frameworks (spécifier, …)
+
+=== Planification
+
+À partir de posture/contexte/résultat attendu
+
+- demander roadmap
+- Découper par département
+
+Donne le premier élément de travail
+- demander par exemple le plan d’onboarding en 3 mois
+
+=== Affiner
+
+* Delivery
+** Génération features
+** Découper en user stories -> vérifier cohérence
+** Affiner liste de user-stories
+*** générer critères d’acceptation
+*** générer cas de test
+** Découper user story
+*** Workflows
+*** Business rules
+*** …
+** Qu’est-ce que j’ai pu oublier ?
+** Optimiser (il existe des apps)
+** Mails d’invitation
+** Rétros
+
+=== Data/customer
+
+* Suivi métriques -> selon critères
+* Suggestion de quoi suivre, quand, comment les obtenir, …
+* Analyser de la brute -> demander axes d’amélioration
+* Analyser features qui ne conviennent pas
+* Améliorer FAQ
+  Base: mails, support, …
+
+=== Marketing
+* À partir du livre …
+Quelle boucle de Growth Marketing ajouter ?
+* Créer posts linkedin, instagram, …
+
+=== Soft Skills
+- Mettre les formes
+- Intension particulière …
+- Générer plan + com d’arrêt d’app
+- Écriture dans une autre langue
+
+---
+
+Bons prompts
+- Posture (qui est-tu ?)
+- Contexte (contraintes, émotionnel, …)
+- Résultats attendus
+- Format
+- Exemples ocncrets de résultats attendus
+- Itérer, perfectionner les instructions
+
+---
+
+Avancées:
+- Plugins
+- Custom instructions (context) -> templates de prompt
+- GPTs: mini GPTs pour spécialisation
+- Générer du code/scripts/…
+- Résumer ce qu’il y a dans un fichier
+- Générer graphiques
+
+---
+
+Si réponse générique -> Prompt trop générique
+
+-> ChatGPT: Prendre l’app en audio
+

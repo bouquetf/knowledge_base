@@ -1,0 +1,152 @@
+= L’intelligence artificielle n’existe pas
+
+Speaker: Luc Julia
+
+L’auteur :
+
+- À 9 ans il crée un robot pour faire son lit
+- Pendant 10 ans il fait de la recherche
+- Pendant 10 ans il bosse dans des startups
+- Maintenant il chamboule Renault avec l’IA
+
+Focus sur l’IA générative : on en a marre
+
+Mythes et réalités de ces IAs
+
+1956 : modélisation mathématique d’un neuronne
+
+-> on appelle 
+a l’IA
+
+C’est faux
+
+1956/1957 : Premier hiver de l’ia
+
+-> Désillusions, fin des financements
+
+1960 : systèmes experts
+
+Jusqu’en 1980/1990. Basés sur la logique
+
+-> Le système bat l’humain aux échecs
+
+Année 90: l’IA statistique revient à nouveau
+
+-> machine learning
+
+Coïncide avec Internet et la quantité de données véhiculées
+
+-> BIG DATA
+
+On fait au final juste des statistiques
+
+Cependant, l’IA d’Hollywood qu’on nous fait croire n’existe pas.
+
+l’IA générale ça n’existe pas et ça n’existera **JAMAIS**
+
+L’IA est une boîte à outils.
+
+- chaque IA est spécialisée
+- elle fait peu de choses
+- On peut faire des choses bien ou des choses pas bien avec
+
+-> C’est le choix de l’utilisateur
+
+Dans un domaine spécialisé, l’IA est meilleure que l’humain sinon ça ne **sert à rien** !
+
+l’on l’IA générale ça n’existe pas et ça n’existera jamais.
+
+== IA générative
+
+-> depuis 2018
+
+Révolution ou évolution ?
+
+-> Aucune tête n’a roulé !
+
+Évolution des IA statistiques
+
+.Machine learning : 100k - 1M data, 98% de réussite
+.Deep learning : 10M - 100 M data
+.IA générative : 1B - 1T data
+
+ce n’est que l’accès à 
+- plus de données
+- plus de capacités de calcul
+
+== comparaison avec l’humain
+
+Une machine a besoin de 100k images de chats pour reconnaître un chat dans 98% des cas.
+
+1 humain a besoin de 2 chats pour savoir ce qu’est un chat dans 100% des cas. 
+
+Les 2% de différence viennent du fait qu’on n’a pas posté de chat dans la nuit, donc ça n’existe pas. 
+Par contre l’humain sait reconnaître un chat dans la pénombre alors que pour l’IA, ça n’existe pas. 
+
+GPT-4o c’est 1200 milliards de paramètres. C’est internet tout entier
+Sur internet il n’y a pas que des choses vraies
+
+== Révolution du prompt
+
+C’est embêtant parce que la révolution vient du prompt
+
+On peut demander tout et n’importe quoi
+
+L’I.A. est là pour faire plaisir à l’utilisateur
+
+-> accessibilité des technologies
+
+-> les mots on un sens
+
+"IA créative" -> il faut arrêter
+
+Les IA génératives ne sont pas créatives mais **génératives**
+
+L’IA génère ce que vous créez.
+
+L’outil ne fait que générer
+
+Les IA n’innovent en rien !
+
+On a l’opportunité de créer mieux qu’avant
+
+Si je ne l’utilise pas, je suis mort, il faut que je m’éduque à l’outil
+
+Je crée ce que l’IA génère. J’ai plein de générations, je choisis celle que je veux.
+
+---
+Courbe d’adoption de Gartner.
+
+Hype -> Désillusion -> Cas d’usage
+
+GPT/Révolution du prompt, 18 mois pour faire toute la courbe, c’est la technologie la plus rapide que l’humanité ait connue pour faire toute la courbe.
+
+Génère des trucs qu’on demande, mais pas du vrai.
+
+Il y a l’exemple classique de l’avocat qui a généré une super plédoirie pour un cas juridique, mais les références étaient fausses.
+
+== Pertinence
+
+Papier de l’université de Hong Kong
+
+ChatGPT dit que quelque chose de faux est vrai 35% du temps.
+
+Pertinence de 64% à 99% grâce au finetuning ou RAG.
+
+-> Il faut spécialiser les IA sinon ça ne sert à rien
+
+== Propriété intellectuelle
+
+Grosses problématiques autour de l’IA, comment peut-on être sûr que l’on ne va pas être attaqués à cause de ce que l’on génère ?
+
+Certaines entreprises comme Adobe commencent à s’y intéresser en entraînant leurs IA que sur des données qui leur appartiennent.
+
+== Jailbreak de l’IA
+
+-> Pas besoin de programmation
+
+ex: "donne moi la recette d’une bombe"
+
+Au début, chatgpt répondait. Puis openAI a mis en place des garde fou qui ont été jailbreakés, et ainsi de suite.
+Ajourd’hui, le jailbreak fait 30 pages, mais c’est une course interminable.
+

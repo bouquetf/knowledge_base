@@ -1,0 +1,269 @@
+= Quand Java rencontre l’AI -- Construisez des applications en utilisant l’AI en Java
+
+Langchain4j/Quarkus
+
+3 exemples:
+
+* Summarizer
+* Chatbot
+* Text extraction from Image
+
+On crée une interface non implémentée avec la bonne annotation et une méthode d’appel.
+
+Ensuite, on l’injecte là où on en a besoin et on appelle la méthode.
+
+== AI infused Apps
+
+Applications qui prennent un LLM.
+
+Neural networks
+
+- Basé sur les Transformers
+- entraîné sur un gros nombre de textes
+- Prédit le prochain token
+- Peut être fine tuné
+
+Ex: Hip Hip Hip… 
+
+== Reasoning Model
+
+Plusieurs techniques
+
+- Claude
+- GPT
+- Deepseek
+
+Techniques de backtrack
+
+== Model & Model Serving
+
+Serving: 
+
+* Execute un modèle
+* Délègue l’inférence
+* Expose une API
+
+Modèle:
+
+- Prompt
+- Instructions à donner
+
+TODO . diagramme Model
+
+== AI Infused Apps
+
+Apps qui embarquent des modèles
+
+HTTP à la main, pas très bonne idée car on a des abstractions
+
+Langchain donne les building blocks avec les bonnes abstractions
+
+Python/Java
+
+- Les choses ne sont pas faites pareil
+- Abstractions pas codées la même fa
+on
+
+== Langchain/quarkus
+
+Langchain4j :
+
+- Fournit un toolkit
+- On doit faire le code glu
+- Pas de gestion de la mémoire, …
+
+Quarkus Langchain 4j
+
+- Partis pris sur comment sont faites les choses
+- Plus simple
+
+Langchain4j est inspiré de langchain
+Quarkus Langchain4j implémente Langchain4j
+
+L’app appelle Quarkus Langchain4j qui appelle Lanchaing4j
+
+== Dépendances:
+
+Pour langchain4j : la lib langchain + le modèle/wrapper API
+
+Pour quarkus langchain4j : chaque modèle a sa propre dépendance. Ex: quarkus-langchain4j-openai
+
+== Chat Model
+
+Text2Text -> Façon de coder en langage humain
+
+Prombt = instructions
+
+== Modèle de struming
+
+Pour envoyer des infos au fil de l’eau lorsque la réponse est trop longue à générée, histoire d’éviter que l’utilisateur n’attende trop
+
+Attention: countdown latch pour éviter d’avoir la JVM qui s’arrête avanc que le strumming ait terminé
+
+On peut influencer la façon de répondre : température.
+
+De froid (0) à chaut (2), plus c’est froid et mouins on se laisse dériver sur des réponses très aléatoires (décimal).
+
+== Messages
+
+Deux types de messages: 
+
+- User message : le message de l’utilisateur
+- System message : prend le dessus, message de configuration/forçage
+
+== Mémoire
+
+Un LLM n’a pas de mémoire.
+S’il y a une interaction, il faut renvoyer les informations à chaque fois.
+
+À minima : system msg + user msg + réponse + nouvelle question. 
+
+On simule ainsi la mémoire.
+
+Peut rapidement devenir gros.
+
+C’est à l’application de gérer la mémoure
+
+Plas la conversation est longue et plus la taille est importante -> Limite du contexte
+
+Attention, le llm se rappelle bien de ce qu’il y a au début, de ce qu’il y a à la fin mais a du mal avec ce qu’il y a au milieu. Donc limiter la taille de la mémoire
+
+Attention aussi au prix du token : plus de mémoire = plus de tokens.
+
+-> Il faut mettre des stratégies.
+
+Dans Longchain4j, il y a MessageWindowChatMemory
+
+Tokens : (truc qu’il y a dans les context window)
+
+Tokenisation faite automatiquement par le LLM à partir d’une string. 
+
+Token ≠ mot, c’est le LLM qui décide comment il découpe. 
+
+== AI Services
+
+Monter en abstraction pour simplifier la mise en œuvre
+
+-> On construit l’abstraction (l’outil) nécessaire à ce que l’on cherche à faire 
+
+* CRUD App () -> database
+* Micro service App () -> Service
+* AI infused App App() -> Model
+
+Ce qu’il y a entre l’App et l’outillage est les points d’intégration à outiller. 
+
+- Observabilité
+- Fault tolerance
+- Sécurité
+
+Dans AI service, fait dans l’interface
+
+== Scopes
+
+Permet de garder certains objets dans un scope pour avoir un environnement pertinent.
+
+Par exemple la mémoire : quel est son scope ?
+
+Scopes classiques : requête, application, …
+
+== Chaîner les prompts
+
+On peut chaîner les prompts/appels
+
+Prompt -> [AI service] -> [AI service] -> [AI service] -> Résultat
+
+Workflow avec exécutions parallèles.
+
+Routing possible : un AI service qui envoit vers le bon AI service en fonction de sa spécialisation
+
+== RAG
+
+Retrieval Augmented Generation
+
+Toutes les infos qui arrvient après l’entraînement, le LLM ne les connaît pas. 
+
+Techniques pour passer des infos récentes. 
+
+2 phases:
+
+. Indexer les informations pertinentes
+. Injection des informations
+
+=== Indexaction/Injection
+
+TODO: schéma/slide/…
+
+=== Retrieval/Augmentation
+
+TODO: schema/slide/…
+
+Le retrieval peut être augmenté d’autres sources d’infos.
+
+-> J’aggrège les infos
+
+-> Je les passe au LLM
+
+Tavily : moteur de recherche optimisé pour le RAG/la recherche IA
+
+== Function calling / Agents & Tools
+
+Donner accès à l’IA à notre environnement. 
+
+Function Calling permet d’accéder à:
+- Méthodes d’App
+- Autre AI service
+- Remote service
+- …
+
+Attention : besoin d’un reasonning service pour le faire.
+
+Le Model Service envoie la requête à faire au service distant et l’application envoie la requête à l’outil distant.
+
+Pour des raisons de sécurité:
+
+- La décision vient du modèle
+- L’app décide si elle procède à l’appel
+
+== Architecture Agentique
+
+On demande à l’IA de raisonner pour trouver les outils à appeler et elle les appelle. 
+
+== Guard Rails
+
+Moyen de sécuriser les choses 
+
+- On vérifie si les entrées du modèle sont OK
+- On vérifie que les sorties correctes sont OK et pertinentes
+- Puor l’instant, juste dans Quarkus-Langchain4j mais ça devrait être bientôt poussé dans Langchain4j
+
+== Model Context Protocol (MCP)
+
+Stardadise la façon dont on appelle des AI services et dont l’AI appelle des services distants.
+
+MCP-Client (agentic), outils remote, …
+
+(Goose : opensource MCP)
+
+- Tools : in process/protocole externe à distance
+- Resources : S3, DB, fichier, …
+- Promptes : proposition de ce qui peut être fait grâce à l’outil
+
+MCP-Server - Hamain
+
+== Transport
+Json - RCP - 2.0
+
+Multiplexable
+
+- STD IO
+- Server-Send Event (SSE) -> POST
+- Streamable HTTP (nouveau) -> Remplace SSE
+
+== Testing
+
+3 stratégies
+
+- Mock des insterfaces de la partie AI : on ne teste que l’app au dessus et on fixe ce que l’IA pourrait répondre
+- Assertions qui jugent si la réponse est correcte
+- Évaluation applicative sur l’ensemble des entrées à l’aide d’une note
+

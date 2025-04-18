@@ -1,0 +1,189 @@
+= Décrypter & gérer les conflits - Outils pratiques pour transformer les tensions
+
+== Qu'est-ce que le conflit ?
+
+Se heurter, opposition.
+
+- plus ou moins long
+- plus ou moins légaux
+
+Deux causes:
+
+- Distribution de ressources
+- Valeurs, idées
+
+Un problème n’est pas un conflit
+
+Un prolbème est rationnel, écart entre ce que l’on veut et la réalité.
+
+Un conflit n’est pas mesurable ou observable, c’est une accumulation, c’est essentiellement émotionnel
+
+Racine:
+
+- Compétition sur les ressources
+- Mal entendu
+- Lute de pouvoir/agendas personnels
+
+Sur
+
+- Tâches
+- Objectifs
+- Relationnels (système de valeurs)
+- Si conflit de valeurs, ça peut être atténué grâce à la culture d’entreprise
+- Conflit de processus, sur le comment
+
+Bloquer la communication:
+
+- Jugements
+- Accusations
+- Contrôle
+- Distance trop importante dans la relation
+- Supériorité de façon austentatioire
+
+Un conflit est inévitable mais peut être constructif
+
+- Permet de mieux comprendre
+- La fuite n’est pas la bonne option
+- Évolution dans la relation
+
+== Analyse transactionnelle
+
+C’est un outil où on considère que chaque individu a des états du moi
+
+- Parent
+- Adulte
+- Enfant
+
+Les notres vont chercher ceux des autres
+
+== Transactions classiques - complémentaires
+
+== Parent
+
+Apporte les valeurs, les croyances
+
+- Positif (+) apporte un cadre, est normatif
+- Négatif (-) entre dans la persécution/le juge
+
+- Nourricier (+)
+- Sauveur (-)
+
+== Adulte/enfant
+
+Tripartite
+
+Adulte : dans le factuel
+
+Adapté
+
+- Positif : Héros
+- Négatif : Adolescent (fait ses crises)
+
+soumis
+
+- Positif : Bon élève
+- Négatif : Victime
+
+Libre: lié aux règles sociales
+
+- positif: Créatif
+- Négatif : Inconscient
+
+Enfant : dans l’émotionnel
+
+== Transaction conflictuelle
+
+=== Complémentaire
+
+TODO: diagramme transaction conflictuelle complémentaire
+
+Conflit qui dure
+
+Confronte nos croyances
+
+=== Transaction croisée
+
+TODO: diagramme transaction croisée
+
+Tout le monde se valide ses croyances
+
+== Diagramme des types de relations
+
+* Surpuissance + - -> Guérier
+* Impuissance - - -> Dépressif
+* Bienveillance + + -> Ampathique
+* Impuissance - + -> Fuite
+
+Être en capacité de reconnaître les états du moi
+-> réaligne avec notre interlocuteur
+
+== Au cœur du conflit
+
+Au cœeur du conflit : le pouvoir
+
+Il en existe de plusieurs sourtes. En interaction avec l’autre
+
+Légitimité: 
+
+* Chef
+* Héréditaire
+* Charismatique (Homme/Femme providence)
+* Relationnel légal (Chef de projet, …)
+
+Pas une donnée absolue mais capital
+
+* Organisation / Département d’une entreprise (RH)
+* Social
+* Culturel (ex: celui qui maîtrise)
+
+Joue
+
+* Contacts
+* Savoir
+* Maîtrise des règles de l’organisation
+** Formelle
+** Informelle -> Par forcément accès, générateur de conflit
+* Accès à l’info
+
+== Types de pouvoirs
+
+3 types 
+
+* Domination
+* Capacité : pouvoir de faire, accès à la connaissance
+* Intéraction : entre les personnes, informel, tacite -> gros générateur de conflits
+
+Contrôle des ressources et des relations ?
+
+== Théorie des jeux
+
+Décision en interaction. Conflit comme décision interactive.
+
+Modèle mathématique : 
+
+* Agents intelligents rationnels
+* Décisions en situation interdépendantes
+
+Les jeux:
+
+* Choix d’une stratégie
+* Issue coût et/ou bénéfice
+
+Exemple : dilemme du prisonnier
+
+== À quel jeu on joue ?
+
+* Niveau de coopération
+** Non coopératif
+** Coopératif (le mieux) -> chercher à tendre vers ça
+* Niveau d’information : ce qu’on peut faire ou pas ?
+** Parfaite : Vue sur tous les coups possible et historique. Rare
+** Imparfaite : On a une connaissance partielle, temporalité
+** Information incomplète
+
+Savoir à quel jeu on joue
+* Somme nulle : Gagnant/Perdant
+* Somme positive : tout le monde peut gagner un peu
+* Somme négative : tout le monde a quelque chose à perdre - à éviter
+
+Important : sortir de cette vision à somme nulle et aller vers un jeu à somme positive.

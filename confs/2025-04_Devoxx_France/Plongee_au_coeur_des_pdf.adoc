@@ -1,0 +1,96 @@
+= Plongée au cœur des PDF
+
+Speaker: Frédéric BISSON
+
+Objectif: comprendre le format PDF pour l’optimiser
+
+== Pourquoi s’y intéresser ?
+
+Problème:
+
+- Mise en page figée
+- Accessibilité
+- Interactif
+- Peu d'évolution
+
+Avantages:
+
+- Signatures
+- Format figé
+
+Générateur de poids:
+
+. Graphiques
+. Utilisateur
+. Moteur PDF
+
+Il existe des compressions mais:
+
+- maltraite les images
+- optimisation ciblée
+- disparition des méta données
+
+== D'où ça vient ?
+
+- Adobe en 1993
+- 2008: standardisation ISO
+- 2020: PDF 2.0, support limité
+
+== Construction ?
+
+- Format générique
+- Vient de postscript
+- Parti depuis Xerox -> Adobe
+- Adaptation de PS
+
+Éléments:
+
+- Commentaires
+- Mots clef
+- Nombres
+- Chaînes de caractères
+- Chaînes hexa
+- Noms
+- Objets référencés
+- Flux (données brutes)
+- Dictionnaires (clé/valeur)
+- Tables de références croisées pour retrouver chaque objet dans le PDF
+- Trailer (annonces) : références
+
+---
+
+* Langage graphique
+* Flux et filtres
+** Fichiers embarqués
+** Vidéos
+** Images
+* Chaque flux peut être filtré pour:
+** Compresser
+** coder (format ascii, hexa, …)
+** cumulables
+
+== Lecture d'un PDF
+
+En 93, on prévoyait d'envoyer un PDF par mail.
+
+Gestion de gros fichiers
+
+Prévu pour faire des mises à jour
+
+.On repère l'en-tête. Signature, commentaire détrompeur. %PDF-{version}
+.On va à la fin du fichier pour trouver l'annonce quelque part et dans les derniers 1024 octets. %EOF
+.Remonter jusqu’à retrouver les mises à jour et annonces correspondantes. Mais il faut reconstruire le catalogue !
+
+
+== Optimisation
+
+. Chaînes de caractère (litérales/hexa)
+. Caractères inutiles
+** Espaces
+** Retours à la ligne
+** Précisions inutiles
+. Optimiser le XML (jpeg par exemple)
+. Font true types
+. Supprimer les éléments inutiles
+. code graphique
+. depuis 1.5, on peut regrouper das tables dans un objet et le compresser (filtres)

@@ -1,0 +1,67 @@
+= La territorialisation des infrastructures comme levier de pouvoir
+
+Ophélie Coelho
+
+Géopolitique actuelle. 
+On a besoin de quelqu'un pour nous éclairer.
+
+Livre: Géopolitique du numérique.
+
+Territorialisation des infrastructures comme levier du pouvoir.
+
+Carte de 1903. Réseau télégraphique de l'époque.
+
+Concentration des propriétés
+
+Infrastructures déjà instrumentalisée pour des raisons géopolitiques.
+
+Réseaux considérés par les états comme une force, mais aussi une faiblesse, un danger. 
+
+Internet n'est pas sans frontière, c'est des négociations pour ouvrir des liens.
+
+Infrastructures -> levé de pouvoir. 
+
+OSI : intérêt de traduire la complexité du web.
+
+La couche 7 devient de plus en plus complexe.
+
+Couches 7, 8, 9, le device de l'utilisateur ?
+
+Des fois, on recrée toutes les couches dans la couche 7 (ex: AWS).
+
+Or, qui maîtrise, qui possiède l'ensemeble du logiciel/Matériel ?
+
+Le web et les usages numériques sont très concentrés en terme de propriétaires.
+
+Transition numériques, notamment en Afrique. Qui possède les câbles, qui lead le secteur ? Par où est-ce que ça transite ?
+
+Des multinationnales viennent installer des infrastructures en faisant perdre de l'indépendance aux africains. 
+
+Logique centre/périphérie.
+
+Théorie de la dépendance (néo-marxisme).
+
+Approche du pouvoir accroché à des points de passage obligés. 
+
+- On peut faire changer le droit, les tarifs, …
+- Analyse des points de concentration (dont médias) et accès à la clientelle comme levier de pouvoir
+- Influences sur le marché du numérique et logique des marchés
+
+Regarder la zone de dépendance de chaque Big Tech.
+
+Big Tech profondément structurelle, peu contrôlable par un état (l'armée peut s'occuper de big pharma, mais le logiciel se déplace beaucoup plus vite que la marchandise et n'est au final pas arrêtable)
+
+Les territoires sont des laboratoires pour les big tech.
+-> Permet de tester des modèles pour les déployer ensuite globalement.
+
+Un état ne peut combattre une multi-nationnale.
+
+Comment agir ?
+- Établir un diagnostique des dépendances
+- Ne pas utiliser AWS lorsqu'on n'utilise que 2 services qui sont remplaçables. 
+- Maîtriser la tech sur les secteurs nécessaires au commun
+- Secteurs particuliers (éducation, santé, …)
+- Imposer des nœuds de dépendance aux autres.
+- Inclure une culture numérique globale.
+
+En Europe, on a une grande diversité des entreprises.

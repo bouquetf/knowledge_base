@@ -187,3 +187,32 @@ Savoir à quel jeu on joue
 * Somme négative : tout le monde a quelque chose à perdre - à éviter
 
 Important : sortir de cette vision à somme nulle et aller vers un jeu à somme positive.
+
+== Don et contre don
+
+Tout don crée une obligation implicite.
+
+Créateur de conflit -> Don compétitif. Exemple : don trop important, réponse impossible
+
+Résolution : cadrer l’acceptation. Ex: tu  veux m’aider ? Oui, c’est un sujet qui m’intéresse et c’est une opportunité pour moi. 
+
+On rééquilibre le don
+
+== Différence de comportements
+
+Évitement fuite : temporise mais ne résout rien
+
+Accomodation : Autorise l’autre à outrepasser nos limites
+
+Rivalité : Affrontement, ne règle rien, on écrase, le problème revient sur la table
+
+Compromis : Insatisfaction partielle/Satisfaction partielle -> Si tout le monde gagne, c’est gagnant/gagnant
+
+== Sortir du conflit
+
+. Ne pas laisser tomber dans les émotions
+. Écouter
+. Cadeau de l’élégance : accepter, co-construire
+. Recadrer sur le besoin + solution à co-construire
+. Montrer les conséquences + solution à co-construire
+

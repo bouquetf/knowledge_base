@@ -1,0 +1,76 @@
+= Coder avec peu : les bons tuyaux de Mario
+
+Speaker : Clément de Tastes
+
+NES - 8 bits -> 1400 jeux
+
+Processeur 8 bits, 1,66 Mhz
+256x240 pixels, 64 couleurs
+2Ko de RAM
+
+Pas d'horloge/stockage
+
+Tout doit être codé sur les cartouches.
+Pgroamme + données graphiques
+
+32ko + 8 ko
+
+Graphiques/Écrans trop gros pour la console
+
+=> On crée des tuiles à partir de 2 petites tables de 8x8 pixels.
+Graphiques = tuiles
+
+960 octets pour afficher 1 écran.
+
+Chaque octet est une adresse dans la table des tuiles.
+
+En mémoire, on peut stocker 2 écrans avec un jeu de caméra, on peut scroller. 
+
+== Stockage des niveaux
+
+32 niveaux
+Méta tuiles : on factorise certains éléments (ex: tuyaux)
+
+Les séquences des éléments de décors est toujours la même. 
+
+Sprites : chucks de premier plan (énemis, …)
+
+8 bits : priorité : 1er plan ou derrière pour entrer dans les tuyaux.
+
+Flip : miroir
+
+Écran complexe : mix entre arrière plan et sprite de 1er plan pour donner l'illusion.
+
+== Fonctions complexes:
+
+Proc 8 bits, fonctions de 8 bits max.
+Pour les fonctions type sinus, on fait des tables avec les nombres pré calculés.
+
+Aléatoire : graine en dur + générateur pseudo aléatoire (fibonacci par exemple) + temps passé depuis le lancement du jeu
+
+== Sauvegardes
+. Pas de save, on fait des warp zones
+. Mots de passe
+. Stocké dans le Hardware (Zelda): on upgrade la cartouche avec RAM + pile
+
+== Pistolet
+
+Juste une lentille + détecteur de lumière et alternance d'écrans lorsque le joueur appuie sur la queue de détente.
+
+. écran de jeu
+. écran noir
+. carré blanc à l'endroit où il faut tirer
+
+À 2 joueurs : 2 frames pour la détection - 1 par pistolet
+
+== Design de niveaux
+
+On commence sur papier cadrié puis on code après
+
+== Triche
+
+On fait un man in the middle entre la cartouche et la console
+
+On injecte les adrresses en fonction de ce qu'on veut modifier
+
+Vient avec un livre de cheats qui contient tous les jeux supportés par le dispositif de triche

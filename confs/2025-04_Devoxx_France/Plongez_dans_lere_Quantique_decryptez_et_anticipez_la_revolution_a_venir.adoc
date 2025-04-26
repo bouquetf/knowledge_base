@@ -1,0 +1,69 @@
+= Plongez dans l’Ère Quantique : décryptez et anticipez la révolution à venir
+
+Speaker : Fanny Bouton
+
+Le quantique est dangereux, il y a des gens extra-ordinaires. 
+
+Question : quand est-ce qu’on aura la formule 1 du quantique ?
+
+2 à 156 cubits (IBM) à l’heure actuelle.
+
+6 ordinateurs quantiques en France.
+
+C’est maintenant que ça se passe.
+
+. ça ne remplacera pas l’informatique actuelle
+. Sorte de gros GPU spécialisé dans peu de tâches
+** Simulation
+** Optimisation
+. Intrication, superposition, … 
+Plus de booléen, nouveaux paradigmes, nouvelle façon de coder. 10 types d’ordis quantique. Équivalent de l’époque de l’assembleur. On a des débuts de surcouches logicielles. 
+
+10 à 156 qbits, ça ne fait pas grand chose. 
+
+On simule jusqu’à 20 qbits sur ordinateurs. 
+* Hard: prix de 3k à 100k€
+* Soft pour simujer à moins de 2€ de l’heure
+* Voir comment ça fonctionne sur les différentes approches
+* Beaucoup de communication à l’heure actuelle
+
+Question : est-ce qu’il y a des révolutions ?
+
+Commencer un métier, on est valable dans 2 ans. 
+* Comment suivre la vague ?
+* Paris : s’acculturer sur le sujet
+
+Quentique : minimum 9 ans de formation.
+
+Équipes : tout un tas de métiers à accompagner.
+* Datacenter pour installer les nouvelles machines
+* Logiciel - notebooks
+** Guidelines
+** Facilitér l’entrée pour les utilisateurs
+** Intégration de matériel
+* Créer des double savoirs/triples savoirs
+
+On doit se former aujourd’hui, ça arrive !
+
+Marché à construire !
+
+Cas d’usage ?
+* Luxe: cosmétique via la simulation
+* Médicament
+* Problèmes d’optimisation
+
+-> Sujet des brevets
+
+La france possède 6 types d’ordinateurs quantiques sur les 10 qui existent. On est l’exception européenne.
+
+On n’a pas assez de personnes compétentes/qui s’y intéressent.
+
+Consommer dès maintenant de l’européen. 
+
+Message: Regardez ce qui se passe !
+
+Conférence : France Quantum
+
+* Comprendre les technologies quantiques
+* Décode quantum podcast
+* Quantum podcast FR

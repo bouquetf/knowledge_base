@@ -1,0 +1,102 @@
+= Les super-pouvoirs méconnus de Docker Desktop
+
+Speakers: Guillaume Lours, Philippe Charrière
+
+Docker desktop est beaucoup plus qu’une UI.
+
+-> Gordon : outil IA qui est là pour nous aider
+
+ex: [As a kid] what is Docker Desktop?
+
+== Watch
+
+Paramètre watch sur docker compose détecte si quelque chose a été modifié et relance la commande build + up.
+
+Permet de n’écouter que sur certains fichiers avec --include dans le fichier de conf.
+
+== Images
+
+Dans images: on a la liste des vulnérabilités. Le recommanded fixes donc des tips. 
+
+== Multi staged build
+
+Bonne pratique
+
+On crée des stages où on copie juste le nécessaire du stage précédent. Permet de beaucoup réduire les choses embarquées.
+
+Image "scratch": image la plus petite possible où l’on met juste le strict nécessaire.
+
+Plus on réduit ce qu’il y a dans les images et moins on a de vulnérabilité -> réduction de la surface d’attaque
+
+== Logs de build
+
+Permet d’optimiser les builds, notamment en utilisant le cache
+
+== Containers
+
+Permet d’inspecter beaucoup de choses
+
+== Docker debug
+
+Permet de créer un shell dans un conteneur qui n’en a pas. On a aussi d’autres outils de nix.org.
+
+== docker buildx bake
+
+Permet de décrire le build qu’on veut faire, notamment multi-archs.
+
+Si multi-arch, on utilise des émulateurs. 
+
+Si le build est lancé via github action, utiliser plutôt runner ARM que AMD.
+
+== compose
+
+post-start: exécuter quelque chose après startup (life cycle hook)
+
+[source,Dockerfile]
+----
+develop:
+  watch:
+    …
+----
+
+watch permet de simuler le hot reload
+
+docker compose -f git:/…
+
+Récupère un repos git et le build
+
+== export kubernates
+
+Export docker compose en kubernates
+
+Si kubernates activé, "kind" qui permet d’installer plusieurs nœuds.
+
+== docker model
+
+Docker model : nouvelle feature.
+Permet de récupérer des modèles d’IA.
+
+docker model pull … -> récupère un modèle
+
+docker model run ai/mistral -> permet d’installer mistral et donne accès à un prompt
+
+== provider docker compose
+
+Nouveau provider dans docker-compose pour récupérer un modèle.
+
+[source,Dockerfile]
+----
+provider:
+  type: model
+  options:
+    model: ${embeddings}
+----
+
+feature qui va bientôt arriver, permet d’avoir très bientôt des modèles.
+
+== cli docker desktop
+
+[source]
+----
+$ docker desktop …
+----

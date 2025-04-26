@@ -1,0 +1,103 @@
+The Era of AAP: Ai Augmented Programming using Modern Java
+
+Speaker: Stephan Janssen
+
+Claude Sonet 3.7 est aujourd’hui le meilleur générateur de code.
+
+Nouveautés annoncées chaque semaine (voire chaque jour)
+
+Hugging Face est Français
+
+Respect de la privacy: 
+* modèle local
+* modèle on Premise
+
+Ex:
+* LMStudio
+* Ollama
+* Llama C++
+* Docker
+
+== LLama c++
+
+Swiss tool pour l’IA
+
+* Llama 3.1/2/3
+* Qwen 2.5
+* Deepseek coder
+
+LiveBench.IA -> Bench sur différents domaines dont le code.
+
+Java : peu de solutions:
+* Longchain4j
+* Spring AI
+
+== MCP
+
+Model Context Protocol
+
+Agent -> LLM -> MCP (appel d’un autre outil service)
+
+* Tool service 1
+* Tool service 2
+* Tool service 3
+
+Attention : pas de sécurité !
+
+Implémentations de référence
+* Anthropic -> Python
+* Spring -> Java
+
+== Calcul
+
+Multiblication de matrice
+
+* Panama
+* Tornado VM (support GPU)
+* Babylon (support GPU)
+* GraalVM/GraalPy
+* Foreign Function & Memory (FFM)
+* JLama (Experimental)
+* Llama 3 (Experimental)
+
+== Jlama 
+
+Jlama gh.com/jbake/jlama
+
+-> Récupération d’un modèle local
+
+-> Tout en java
+
+Devoxx/DevoxxGenie…Plugin
+
+-> Plugin IDE Jetbrain
+
+== Llama3.java
+
+Utilisation de l’IA dans une classe Java pour faire de l’inférence.
+
+Depuis java 25-graalvm
+* IA en natif pour Java
+* Génération de binaire natif
+
+=> Plus rapide que llamac++
+
+Directement en Java
+
+== LLM Sharding
+
+Répartir la charge des LLM sur plusieurs machines
+
+vLLM -> sharding orienté NVidia
+
+JLama -> Sharding en java
+
+== À venir
+
+Agentic AI => A2A-ADK/MCP-tools
+
+Orchestration d’agents
+
+Développement d’outils assistants
+
+Création d’un outil assistant de code en java : 2h de boulot !

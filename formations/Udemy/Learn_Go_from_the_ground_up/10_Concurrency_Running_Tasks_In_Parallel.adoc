@@ -1,0 +1,7 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+

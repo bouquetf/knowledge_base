@@ -6,3 +6,86 @@
 :sectlinks:
 
 = Section 1: Getting Started
+
+== Welcome to the course
+
+* Maximilian Schwarzmuller
+* @maxedapps
+* academind.com
+
+== What is Go? And Why Is It Awesome?
+
+Opensource programming language developped by Google (2007)
+
+Très populaire :
+
+* Focus sur la simplicité, la clareté et la scalabilité
+* Très performant, focus sur la concurrence
+* Beaucoup de fonctionnalités déjà intégrées dans le langage : pas besoin de chercher des librairies externes
+* Typage statique, type safety, gestion d’erreur à la compilation plutôt qu’au runtime
+
+Très populaire pour le network/API, pour les microservices, pour les CLI
+
+== Installing Go
+
+Télécharger et installer depuis : https://go.dev
+
+Possibilité de développer en ligne via un code sandbox en ligne: https://codesandbox.io/p/devbox/go-starting-project-x9r4dm
+
+Installation via scoop:
+
+[source, bash]
+> scoop install go
+
+== Local Code Editor Setup For Go Development
+
+Créer un répertoire vide et l’ouvrir dans un éditeur (Visual Studio Code ou alternatives).
+
+== Writing a First Go Program
+
+Créer un fichier app.go avec le contenu suivant :
+
+[source,go]
+----
+package main
+
+import "fmt"
+
+func main() {
+fmt.Print("Hello World")
+}
+----
+
+Pour exécuter
+
+[source,bash]
+----
+go run app.go
+----
+
+https://codesandbox.io/p/devbox/go-getting-started-forked-ydhxqc
+
+== About The Course & Course Content
+
+On commence par les essentiels avant de s’intéresser aux fonctionnalités avancées du langage avant de finir par une
+application REST.
+
+== How to get The Most Of This Course
+
+* Prérequis : connaissance de base en programmation
+* Vidéos à regarder à notre rythme, notamment avec les pauses, en les revoyant, …
+* Pratiquer : faire les exercices, les projets, mais aussi tester sur nos propres projets
+* En cas de blocage, regarder les exemples de code pour comprendre pourquoi ça ne fonctionne pas et demander de l ’aide à la communauté. Participer aux communautés est aussi un excellent moyen d’apprendre.
+
+Communauté:
+
+* Discord: https://academind.com/community/
+* Resources du cours : go-complete-guide-resources
+
+== Course setup
+
+2 options populaires pour faire du go :
+
+* VS Code
+* JetBrains GoLand
+

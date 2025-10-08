@@ -1,3 +1,10 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+
 = Les super-pouvoirs méconnus de Docker Desktop
 
 Speakers: Guillaume Lours, Philippe Charrière
@@ -52,7 +59,7 @@ Si le build est lancé via github action, utiliser plutôt runner ARM que AMD.
 
 post-start: exécuter quelque chose après startup (life cycle hook)
 
-[source,Dockerfile]
+[source,yaml]
 ----
 develop:
   watch:
@@ -84,7 +91,7 @@ docker model run ai/mistral -> permet d’installer mistral et donne accès à u
 
 Nouveau provider dans docker-compose pour récupérer un modèle.
 
-[source,Dockerfile]
+[source,yaml]
 ----
 provider:
   type: model
@@ -96,7 +103,7 @@ feature qui va bientôt arriver, permet d’avoir très bientôt des modèles.
 
 == cli docker desktop
 
-[source]
+[source, bash]
 ----
 $ docker desktop …
 ----

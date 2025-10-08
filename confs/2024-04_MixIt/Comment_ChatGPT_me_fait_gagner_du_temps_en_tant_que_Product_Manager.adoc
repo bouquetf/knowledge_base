@@ -1,3 +1,11 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+:sectnums:
+
 = Comment ChatGPT me fait gagner du temps en tant que Product Manager
 
 Speaker: Aurélie Le guillou
@@ -20,31 +28,29 @@ Approche plus créative que les anciennes applications. "Comment est-ce que tu p
 . Rafiner à partir d'une liste, extirper les étapes intermédiaires
 . Orienter les réponses : métaphores, nombre de propositions, style, …
 
-[note]
+[NOTE]
 ====
 fouiller user journey map
 ====
 
 == Exemple: Cycle produit
 
-:sectnums: 
-
 === Product discovery
 
-- Demander de générer des questionnaires
-- Déroulés en fonction de personnes
-- Générer Typeform, … (plugins)
-- Demander frameworks (spécifier, …)
+* Demander de générer des questionnaires
+* Déroulés en fonction de personnes
+* Générer Typeform, … (plugins)
+* Demander frameworks (spécifier, …)
 
 === Planification
 
 À partir de posture/contexte/résultat attendu
 
-- demander roadmap
-- Découper par département
+* demander roadmap
+* Découper par département
 
 Donne le premier élément de travail
-- demander par exemple le plan d’onboarding en 3 mois
+* demander par exemple le plan d’onboarding en 3 mois
 
 === Affiner
 
@@ -78,32 +84,32 @@ Quelle boucle de Growth Marketing ajouter ?
 * Créer posts linkedin, instagram, …
 
 === Soft Skills
-- Mettre les formes
-- Intension particulière …
-- Générer plan + com d’arrêt d’app
-- Écriture dans une autre langue
+* Mettre les formes
+* Intension particulière …
+* Générer plan + com d’arrêt d’app
+* Écriture dans une autre langue
 
----
+'''
 
 Bons prompts
-- Posture (qui est-tu ?)
-- Contexte (contraintes, émotionnel, …)
-- Résultats attendus
-- Format
-- Exemples ocncrets de résultats attendus
-- Itérer, perfectionner les instructions
+* Posture (qui est-tu ?)
+* Contexte (contraintes, émotionnel, …)
+* Résultats attendus
+* Format
+* Exemples ocncrets de résultats attendus
+* Itérer, perfectionner les instructions
 
----
+'''
 
 Avancées:
-- Plugins
-- Custom instructions (context) -> templates de prompt
-- GPTs: mini GPTs pour spécialisation
-- Générer du code/scripts/…
-- Résumer ce qu’il y a dans un fichier
-- Générer graphiques
+* Plugins
+* Custom instructions (context) -> templates de prompt
+* GPTs: mini GPTs pour spécialisation
+* Générer du code/scripts/…
+* Résumer ce qu’il y a dans un fichier
+* Générer graphiques
 
----
+'''
 
 Si réponse générique -> Prompt trop générique
 

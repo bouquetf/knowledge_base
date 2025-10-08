@@ -1,16 +1,23 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+
 = Décrypter & gérer les conflits - Outils pratiques pour transformer les tensions
 
 == Qu'est-ce que le conflit ?
 
 Se heurter, opposition.
 
-- plus ou moins long
-- plus ou moins légaux
+* plus ou moins long
+* plus ou moins légaux
 
 Deux causes:
 
-- Distribution de ressources
-- Valeurs, idées
+* Distribution de ressources
+* Valeurs, idées
 
 Un problème n’est pas un conflit
 
@@ -20,39 +27,39 @@ Un conflit n’est pas mesurable ou observable, c’est une accumulation, c’es
 
 Racine:
 
-- Compétition sur les ressources
-- Mal entendu
-- Lute de pouvoir/agendas personnels
+* Compétition sur les ressources
+* Mal entendu
+* Lute de pouvoir/agendas personnels
 
 Sur
 
-- Tâches
-- Objectifs
-- Relationnels (système de valeurs)
-- Si conflit de valeurs, ça peut être atténué grâce à la culture d’entreprise
-- Conflit de processus, sur le comment
+* Tâches
+* Objectifs
+* Relationnels (système de valeurs)
+* Si conflit de valeurs, ça peut être atténué grâce à la culture d’entreprise
+* Conflit de processus, sur le comment
 
 Bloquer la communication:
 
-- Jugements
-- Accusations
-- Contrôle
-- Distance trop importante dans la relation
-- Supériorité de façon austentatioire
+* Jugements
+* Accusations
+* Contrôle
+* Distance trop importante dans la relation
+* Supériorité de façon austentatioire
 
 Un conflit est inévitable mais peut être constructif
 
-- Permet de mieux comprendre
-- La fuite n’est pas la bonne option
-- Évolution dans la relation
+* Permet de mieux comprendre
+* La fuite n’est pas la bonne option
+* Évolution dans la relation
 
 == Analyse transactionnelle
 
 C’est un outil où on considère que chaque individu a des états du moi
 
-- Parent
-- Adulte
-- Enfant
+* Parent
+* Adulte
+* Enfant
 
 Les notres vont chercher ceux des autres
 
@@ -62,11 +69,11 @@ Les notres vont chercher ceux des autres
 
 Apporte les valeurs, les croyances
 
-- Positif (+) apporte un cadre, est normatif
-- Négatif (-) entre dans la persécution/le juge
+* Positif (+) apporte un cadre, est normatif
+* Négatif (-) entre dans la persécution/le juge
 
-- Nourricier (+)
-- Sauveur (-)
+* Nourricier (+)
+* Sauveur (-)
 
 == Adulte/enfant
 
@@ -76,18 +83,18 @@ Adulte : dans le factuel
 
 Adapté
 
-- Positif : Héros
-- Négatif : Adolescent (fait ses crises)
+* Positif : Héros
+* Négatif : Adolescent (fait ses crises)
 
 soumis
 
-- Positif : Bon élève
-- Négatif : Victime
+* Positif : Bon élève
+* Négatif : Victime
 
 Libre: lié aux règles sociales
 
-- positif: Créatif
-- Négatif : Inconscient
+* positif: Créatif
+* Négatif : Inconscient
 
 Enfant : dans l’émotionnel
 
@@ -95,7 +102,10 @@ Enfant : dans l’émotionnel
 
 === Complémentaire
 
-TODO: diagramme transaction conflictuelle complémentaire
+[TIP]
+====
+À compléter : diagramme transaction conflictuelle complémentaire
+====
 
 Conflit qui dure
 
@@ -103,7 +113,10 @@ Confronte nos croyances
 
 === Transaction croisée
 
+[TIP]
+====
 TODO: diagramme transaction croisée
+====
 
 Tout le monde se valide ses croyances
 
@@ -182,6 +195,7 @@ Exemple : dilemme du prisonnier
 ** Information incomplète
 
 Savoir à quel jeu on joue
+
 * Somme nulle : Gagnant/Perdant
 * Somme positive : tout le monde peut gagner un peu
 * Somme négative : tout le monde a quelque chose à perdre - à éviter

@@ -1,4 +1,11 @@
-Les LLM rêvent-ils de cavaliers électriques ?
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+
+= Les LLM rêvent-ils de cavaliers électriques ?
 
 Speacker : Thibaut Giraud - Monsieur Phi
 
@@ -20,10 +27,10 @@ Analyser le passé
 
 Analyse d’une suite d’informations. Degrés de compréhension: 
 
-. Degré 0 : bruit
-. Degré 1 : Patterns de surface
-. Degré 2 : connaissance basique + compréhension du système d’écriture. Ce qu’il manque : représentation de ce que ça représente
-. Degré 3 : Représentation + connassance stratégique -> Compréhension de la séquence et de ce que ça représente.
+. *Degré 0* : bruit
+. *Degré 1* : Patterns de surface
+. *Degré 2* : connaissance basique + compréhension du système d’écriture. Ce qu’il manque : représentation de ce que ça représente
+. *Degré 3* : Représentation + connassance stratégique -> Compréhension de la séquence et de ce que ça représente.
 
 Argument: "Prédire le prochain token ne permet pas de comprendre"
 

@@ -1,3 +1,10 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+
 = L'Intelligence Artificielle n'existe pas
 
 Speaker: Luc Julia

@@ -1,3 +1,10 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+
 = Plongez dans l’Ère Quantique : décryptez et anticipez la révolution à venir
 
 Speaker : Fanny Bouton

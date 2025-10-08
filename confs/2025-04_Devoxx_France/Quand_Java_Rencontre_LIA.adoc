@@ -1,3 +1,10 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+
 = Quand Java rencontre l’AI -- Construisez des applications en utilisant l’AI en Java
 
 Langchain4j/Quarkus

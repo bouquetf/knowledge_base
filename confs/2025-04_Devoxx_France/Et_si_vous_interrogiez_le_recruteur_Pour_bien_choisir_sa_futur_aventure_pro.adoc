@@ -1,132 +1,151 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+
 = Et si vous interrogiez le recruteur ? Pour bien choisir sa futur aventure pro !
 
 Quelles sont les bonnes questions à se poser. 
 
 == Étapes de recrutement
 
-. Screening
-** Découverte mutuelle
-** Vérification de compatibilité
-. Évaluation techniques - Marathon
-** Hard skills
-** Soft skills -> à ne surtout pas négliger ! 80% des problématiques
-. Entretien final
-** Closer, sécuriser, se projeter
+Screening:: Découverte mutuelle, Vérification de compatibilité
+Évaluation techniques - Marathon:: Hard skills, Soft skills -> à ne surtout pas négliger ! 80% des problématiques
+Entretien final:: Closer, sécuriser, se projeter
 
 == Screening
 
-- Quel est le parcours des fondateurs ?
-- Si le produit est tech mais les fondateurs ne sont pas tech, c'est un red flag !
-- Si que des tech, il va y avoir des lacunes au niveau communication.
-- Le mieux est une équipe pluri disciplinaire.
+* Quel est le parcours des fondateurs ?
+* Si le produit est tech mais les fondateurs ne sont pas tech, c'est un red flag !
+* Si que des tech, il va y avoir des lacunes au niveau communication.
+* Le mieux est une équipe pluri disciplinaire.
 
 Entreprise installée
-- Quelle est la situation financière ?
-- Est-ce que l'entreprise est transparente ?
+
+* Quelle est la situation financière ?
+* Est-ce que l'entreprise est transparente ?
 
 Startup
-- Équilibre financier ?
-- Si oui, la zone dangereuse est passée
-- Si non, quelle est la projection financière ? Quelle est la date de mort ?
-- Si l'entreprise risque de fermer prochainement, c'est une décision à prendre en compte. 
+
+* Équilibre financier ?
+* Si oui, la zone dangereuse est passée
+* Si non, quelle est la projection financière ? Quelle est la date de mort ?
+* Si l'entreprise risque de fermer prochainement, c'est une décision à prendre en compte.
 
 Gestion des collaborateurs ?
-- Nombre de personnes ?
-- Taux de turnover ?
-- Si taux supérieur à la normal, pourquoi ?
-- Si les gens restent ? Pourquoi ?
-- Dans quels service est-ce qu'ils partent ?
-- Juniors ?
-- 30/40 ans -> pas sein, où sont les seniors ? Ils ont détecté quelque chose qui les pousse à partir ou la boîte ne veut pas de senior
+
+* Nombre de personnes ?
+* Taux de turnover ?
+* Si taux supérieur à la normal, pourquoi ?
+* Si les gens restent ? Pourquoi ?
+* Dans quels service est-ce qu'ils partent ?
+* Juniors ?
+* 30/40 ans -> pas sein, où sont les seniors ? Ils ont détecté quelque chose qui les pousse à partir ou la boîte ne veut pas de senior
 
 Modalité du travail ?
-- Si on habite loin du bureau, la modalité est importante
-- Pourquoi est-ce qu'on veut des gens en présentiel ?
+
+* Si on habite loin du bureau, la modalité est importante
+* Pourquoi est-ce qu'on veut des gens en présentiel ?
 
 == Entretien de compétences
 
 C'est un marathon.
 
 Staffing tech
-- Combien de personnes techniques ?
-- = Combien de personnes qui font les choses
-- Combien de devs pour le nombre de SRE (gens qui gèrent la prod)
+
+* Combien de personnes techniques ?
+* = Combien de personnes qui font les choses
+* Combien de devs pour le nombre de SRE (gens qui gèrent la prod)
 
 Diversité tech
-- Combien de tech ?
-- Trop de tech pour peu d'acteurs -> sujet de vigilence
-- 1er SRE de la boîte -> problème
-- Manque de travail d'urbanisation ?
-- Challenger la personne ?
-- Combien de techs ajoutées/retirées ces deux dernières années ?
+
+* Combien de tech ?
+* Trop de tech pour peu d'acteurs -> sujet de vigilence
+* 1er SRE de la boîte -> problème
+* Manque de travail d'urbanisation ?
+* Challenger la personne ?
+* Combien de techs ajoutées/retirées ces deux dernières années ?
 
 Expertise tech
-- Grosse BDD -> combien de DBA ?
-- Infra K8s -> expert ou stagiaire ?
-- Doutes sur l'équipe
+
+* Grosse BDD -> combien de DBA ?
+* Infra K8s -> expert ou stagiaire ?
+* Doutes sur l'équipe
 
 Maturité DORA / Devops
-- Vitesse de création de valeur
-- Vitesse de correction
-- Combien de deploy par jour ?
-- Temps moyen du début du dev à la prod ?
-- Si on ne donne pas l'information, c'est un redflag
+
+* Vitesse de création de valeur
+* Vitesse de correction
+* Combien de deploy par jour ?
+* Temps moyen du début du dev à la prod ?
+* Si on ne donne pas l'information, c'est un redflag
 
 Run:
-- MTTR : combien de temps pour revenir à la normal après un incident ?
-- CFR : taux d'échec lors de la mise en prod ?
+
+* MTTR : combien de temps pour revenir à la normal après un incident ?
+* CFR : taux d'échec lors de la mise en prod ?
 
 Poste de travail ?
-- BYOD/MAC/Linux/Win ?
-- Combien de temps pour configurer son poste de travail et être opérationnel ?
-- Processus long sur post ede travail, le reste sera compliqué
+
+* BYOD/MAC/Linux/Win ?
+* Combien de temps pour configurer son poste de travail et être opérationnel ?
+* Processus long sur post ede travail, le reste sera compliqué
 
 Cadre de travail
-- Dév-prod ou preprod
-- transparent ?
-- Devx ?
+
+* Dév-prod ou preprod
+* transparent ?
+* Devx ?
 
 == Entretien final
 
 Onboarding
-- 1ère semaine/mois/période d'essai ?
-- Mentor ?
-- Rapport d'étonnement ? À qui est-il présenté ?
-- De quoi seront faites mes journées ?
+
+* 1ère semaine/mois/période d'essai ?
+* Mentor ?
+* Rapport d'étonnement ? À qui est-il présenté ?
+* De quoi seront faites mes journées ?
 
 Rémunération
-- Fourchettes Min/Max à l'entrée ?
-- Mécanismes de réévaluation ?
-- Primes individuelles ? Fixe/Variable ? Primes collectives ?
+
+* Fourchettes Min/Max à l'entrée ?
+* Mécanismes de réévaluation ?
+* Primes individuelles ? Fixe/Variable ? Primes collectives ?
 
 Vigilence si séniorité trop basse.
 
 Règles du jeu
-- Objectifs SMART ?
-- Réévaluation ?
-- Changement de niveau ?
-- Implication objectifs ?
+
+* Objectifs SMART ?
+* Réévaluation ?
+* Changement de niveau ?
+* Implication objectifs ?
 
 Évolution de carrière
-- Comment est-ce que je vais évoluer ?
-- Ponts ?
-- Résultats -> carrière ?
+
+* Comment est-ce que je vais évoluer ?
+* Ponts ?
+* Résultats -> carrière ?
 
 Structure Managariale
-- Pyramidal ?
-- N+1 gère combien de personnes ?
-- Points réguliers ?
-- Prises en compte des besoins ?
-- Modalité de congés/RTT ?
-- Niveau de suivi par la hiérarchie ?
-- Demander à rencontrer le N+2
-- Qui gère les congés ? Quelle latitude ?
+
+* Pyramidal ?
+* N+1 gère combien de personnes ?
+* Points réguliers ?
+* Prises en compte des besoins ?
+* Modalité de congés/RTT ?
+* Niveau de suivi par la hiérarchie ?
+* Demander à rencontrer le N+2
+* Qui gère les congés ? Quelle latitude ?
 
 Offboarding
-- Est-ce qu'il y a des entretiens de sortie ?
-- Quelles sont les raisons évoquées ?
-- Statistiques ?
-- Politique de rétention ?
-- Responsabilité de l'entreprise -> Prendre soin des collabs
+
+* Est-ce qu'il y a des entretiens de sortie ?
+* Quelles sont les raisons évoquées ?
+* Statistiques ?
+* Politique de rétention ?
+* Responsabilité de l'entreprise -> Prendre soin des collabs
 
 Pour aller plus loin : récap Miro

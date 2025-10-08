@@ -1,36 +1,43 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+
 = L'intelligence artificielle n'existe pas
 
 Speaker: Luc Julia
 
 L'auteur :
 
-- À 9 ans il crée un robot pour faire son lit
-- Pendant 10 ans il fait de la recherche
-- Pendant 10 ans il bosse dans des startups
-- Maintenant il chamboule Renault avec l'IA
+* À 9 ans il crée un robot pour faire son lit
+* Pendant 10 ans il fait de la recherche
+* Pendant 10 ans il bosse dans des startups
+* Maintenant il chamboule Renault avec l'IA
 
 Focus sur l'IA générative : on en a marre
 
 Mythes et réalités de ces IAs
 
-1956 : modélisation mathématique d'un neuronne
+=== 1956 : modélisation mathématique d'un neuronne
 
 -> on appelle 
 a l'IA
 
 C'est faux
 
-1956/1957 : Premier hiver de l'ia
+=== 1956/1957 : Premier hiver de l'ia
 
 -> Désillusions, fin des financements
 
-1960 : systèmes experts
+=== 1960 : systèmes experts
 
-Jusqu'en 1980/1990. Basés sur la logique
+=== Jusqu'en 1980/1990. Basés sur la logique
 
 -> Le système bat l'humain aux échecs
 
-Année 90: l'IA statistique revient à nouveau
+=== Années 90 : l'IA statistique revient à nouveau
 
 -> machine learning
 
@@ -46,9 +53,9 @@ l'IA générale ça n'existe pas et ça n'existera **JAMAIS**
 
 L'IA est une boîte à outils.
 
-- chaque IA est spécialisée
-- elle fait peu de choses
-- On peut faire des choses bien ou des choses pas bien avec
+* chaque IA est spécialisée
+* elle fait peu de choses
+* On peut faire des choses bien ou des choses pas bien avec
 
 -> C'est le choix de l'utilisateur
 
@@ -66,13 +73,13 @@ Révolution ou évolution ?
 
 Évolution des IA statistiques
 
-.Machine learning : 100k - 1M data, 98% de réussite
-.Deep learning : 10M - 100 M data
-.IA générative : 1B - 1T data
+Machine learning:: 100k - 1M data, 98% de réussite
+Deep learning:: 10M - 100 M data
+IA générative:: 1B - 1T data
 
 ce n'est que l'accès à 
-- plus de données
-- plus de capacités de calcul
+* plus de données
+* plus de capacités de calcul
 
 == comparaison avec l'humain
 
@@ -114,7 +121,8 @@ Si je ne l'utilise pas, je suis mort, il faut que je m'éduque à l'outil
 
 Je crée ce que l'IA génère. J'ai plein de générations, je choisis celle que je veux.
 
----
+'''
+
 Courbe d'adoption de Gartner.
 
 Hype -> Désillusion -> Cas d'usage
@@ -154,7 +162,7 @@ Domaine de la cyber sécurité
 
 == Impact
 
-- Grosse consommation électrique. On construit des centrales à côté des datacenters
+* Grosse consommation électrique. On construit des centrales à côté des datacenters
 
 Les IA jusqu'à maintenant étaient très gourmandes pendant l'apprentissage. Maintenant l'IA générative l'est aussi pendant l'inférence. 
 
@@ -172,10 +180,10 @@ Firefly a licencié toutes les images utilisées pour l'apprentissage
 
 Grok par contre s'en moque.
 
-- Il faut utiliser le fine tuning/RAG
-- Opensource
-- Modèles frugaux
-- Modèles plus spécialisés
+* Il faut utiliser le fine tuning/RAG
+* Opensource
+* Modèles frugaux
+* Modèles plus spécialisés
 
 Les grosses IA sont mortes mais les petites spécialisées sont le futur
 

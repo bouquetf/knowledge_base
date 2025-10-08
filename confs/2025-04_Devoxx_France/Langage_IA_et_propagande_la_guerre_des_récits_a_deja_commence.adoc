@@ -1,3 +1,10 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+
 = Langages, IA et propagande : La guerre des récits a commencé
 
 Thème : tribues et langages
@@ -5,9 +12,10 @@ Thème : tribues et langages
 Question du bullshit. 
 
 Ex: Pub Apple de 1984.
-2 niveaux de langage : 
-- Imaginaire fasciste et totalitaire
-- Mythologique : nouvelle chaîne de langage
+2 niveaux de langage :
+
+* Imaginaire fasciste et totalitaire
+* Mythologique : nouvelle chaîne de langage
 
 L'imaginaire -> langage -> Intensions mercantiles
 
@@ -40,20 +48,20 @@ Confrontation réel vécu aux discours.
 
 == Comment est-ce qu'on en est arrivé là ?
 
-. Niveau 1 -> Le meilleur des mondes. Héritier des lumières, le signe provient du savoir. Améliore nos chemins vers l'amélioration.
+. *Niveau 1* -> Le meilleur des mondes. Héritier des lumières, le signe provient du savoir. Améliore nos chemins vers l'amélioration.
 Signe de l'ordre du symbole.
 -> Le signe a encore un lien avec le réel
-. Niveau 2 -> Le signe connaît une perversion. L'info arrive, se succède, se remplace.
+. *Niveau 2* -> Le signe connaît une perversion. L'info arrive, se succède, se remplace.
 Vérité tronquée. On présente une partie de la vérité. Symbole qui réécrit -> diabole qui sépare. 
 On sait faire le distingo du vrai du faux.
 quelque chose de l'ordre du factice.
-. Niveau 3 -> Le signe est présent mais plus de lien avec le réel. 
+. *Niveau 3* -> Le signe est présent mais plus de lien avec le réel.
 Le narratif n'a plus de référence au réel.
 Signes qui se parlent à eux mêmes. 
 Registre de l'obole, suxexposition. Désenchantement du monde.
 Le réel a disparu, on n'utilise plus le réel. 
 On est dans une simulation. 
-. Niveau 4 -> Le réel n'existe plus, il est obsolète. Hyper réel. On atteint ce stade là. 
+. *Niveau 4* -> Le réel n'existe plus, il est obsolète. Hyper réel. On atteint ce stade là.
 La matrice -> pourquoi en sortir si elle est si bien ?
 Fort probable que bientôt nos identités factices seront nos identités réelles qui nous permettraient de faire des choses dans le réel. 
 cf. Jean Bodriard. Il détestait le film Matrix. C'est le film que la matrice crérait pour empêcher toute alternative. 

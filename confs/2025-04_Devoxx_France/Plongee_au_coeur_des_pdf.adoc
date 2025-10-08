@@ -1,3 +1,10 @@
+:lang: fr
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+
 = Plongée au cœur des PDF
 
 Speaker: Frédéric BISSON
@@ -57,7 +64,7 @@ Il existe des compressions mais:
 - Tables de références croisées pour retrouver chaque objet dans le PDF
 - Trailer (annonces) : références
 
----
+'''
 
 * Langage graphique
 * Flux et filtres
@@ -77,9 +84,9 @@ Gestion de gros fichiers
 
 Prévu pour faire des mises à jour
 
-.On repère l'en-tête. Signature, commentaire détrompeur. %PDF-{version}
-.On va à la fin du fichier pour trouver l'annonce quelque part et dans les derniers 1024 octets. %EOF
-.Remonter jusqu’à retrouver les mises à jour et annonces correspondantes. Mais il faut reconstruire le catalogue !
+. On repère l'en-tête. Signature, commentaire détrompeur. %PDF-\{version\}
+. On va à la fin du fichier pour trouver l'annonce quelque part et dans les derniers 1024 octets. %EOF
+. Remonter jusqu’à retrouver les mises à jour et annonces correspondantes. Mais il faut reconstruire le catalogue !
 
 
 == Optimisation

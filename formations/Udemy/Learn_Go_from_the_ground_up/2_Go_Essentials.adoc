@@ -5,3 +5,1080 @@
 :source-highlighter: rouge
 :sectlinks:
 
+= Section 2: Go Essentials
+
+== Module Introduction
+
+Core concepts: Values, basic types & core language
+
+* Key components
+* Working with values and types
+* Creating & executing Functions
+* Control structures
+
+== Working with Functions & Vulues
+
+Go program key components.
+
+[source,go]
+----
+package main
+
+import "fmt"
+
+func main() {
+fmt.Print("Hello World")
+}
+----
+
+Dans ce code, on a des composants clefs:
+
+* package
+* import
+* main func
+* fmt.Print
+
+Print est une fonction, une commande que l’on exécute.
+
+Les valeurs de string sont entre doubles codes: "
+
+main est une fonction que l’on définit nous même.
+
+== Organizing code with Packages
+
+[source,go]
+----
+package main
+
+import "fmt"
+
+func main() {
+fmt.Print("Hello World")
+}
+----
+
+Le package est un élément très important. Tout fichier go doit avoir un package.
+
+Lorsque l’on écrit un programme go, on doit le séparer en différents packages. On doit avoir au moins 1 package, mais on peut en avoir plusieurs.
+
+On peut exporter et importer des fonctionnalités dans nos fichiers go grâce aux packages. "fmt" par exemple est un package de la https://pkg.go.dev/std[librairie standard].
+
+Références:
+
+* https://pkg.go.dev/std
+
+== The Important Of The Name "main"
+
+[source,go]
+----
+package main
+
+import "fmt"
+
+func main() {
+fmt.Print("Hello World")
+}
+----
+
+
+Pourquoi est-ce qu’on utilise le package main ?
+
+C’est possible théoriquement, mais c’est un package spécial pour dire à go que ce package est le package d’entrée de l’application.
+
+On compile classiquement en utilisant go build:
+
+[source, bash]
+----
+$ go build
+----
+
+== Understanding Go Modules & Building Go Programs
+
+[source,go]
+----
+package main
+
+import "fmt"
+
+func main() {
+fmt.Print("Hello World")
+}
+----
+
+Si l’on essaye de compiler ce programme on a une erreur:
+
+[source, bash]
+----
+$ go build
+go: cannot find main module, but found .git/config in F:\work\Current\dev\techwatch\knowledge_base
+        to create a module there, run:
+        go mod init
+
+----
+
+main correspond à un nom de package, pas de module. Go considère les packages et les modules de façon différente.
+
+L’idée est qu’un module contient plusieurs packgae.
+
+Un module est un projet go.
+
+Pour créer un module :
+[source, bash]
+----
+$ go mod init example.com/first-app
+----
+
+Le paramètre correspond à un nom unique/site unique où sera référencée l’application.
+Il est maintenant possible de compiler:
+
+[source, bash]
+----
+$ go build
+----
+
+Et cela va créer l’exécutable "first-app" (.exe sous windows).
+
+Références:
+
+* src/first_go_module
+
+Pour avoir un exécutable, il est nécessaire d’avoir un package main. Sinon, go build ne produira aucun fichier.
+
+== The "main" Function is Important!
+
+Au-delà du package, on a besoin d’une fonction main.
+
+Tout le code doit être dans des fonction et il n’est possible d’avoir qu’une seule fonction main dans un même package.
+
+Pour les bibliothèques d’utilitaires, on ne crée bien sûr pas de package fonction main.
+
+== Onwards To A New Project
+
+Pour le nommage des fichiers, on utilise en général des "_" pour séparer les mots.
+Dans les modules, on utilise plutôt des "-".
+
+Références:
+
+* src/investment_calculator
+
+
+== Working With Variables, Values & Operators
+
+Les variables se déclarent avec var et se nomment en utilisant du camel case par convention.
+
+Elles doivent être utilisées sinon on a une erreur de compilation.
+
+[source, go]
+----
+package main
+
+func main() {
+	var investmentAmount = 1000
+	var expectedReturnRate = 5.5
+	var years = 10
+
+	var futureValue = investmentAmount * (1 + expectedReturnRate / 100)
+}
+----
+
+On remarque qu’avec ce code, on a une erreur de typage sur le futureValue où il nous dit qu’on ne peut mixer des int et des fload64.
+
+Références:
+
+* src/investment_calculator
+
+== Understanding Value Types
+
+Langage typé statiquement. Les types s’appliquent aux valeurs et sont appliqués de cette façon aux variables.
+
+On ne peut mixer les tapes dans un même calcul, il faut forcer des migrations de types. Par exemple, on utilisantdu cast.
+
+[source, go]
+----
+package main
+
+func main() {
+	var investmentAmount = 1000
+	var expectedReturnRate = 5.5
+	var years = 10
+
+	var futureValue = float64(investmentAmount) * (1 + expectedReturnRate / 100)
+}
+----
+
+En go, il n’y a pas de "puissance" directement accessible, il faut utiliser pow du package math :
+
+[source, go]
+----
+package main
+
+import "math"
+
+func main() {
+	var investmentAmount = 1000
+	var expectedReturnRate = 5.5
+	var years = 10
+
+	var futureValue = float64(investmentAmount) * math.Pow(1 + expectedReturnRate / 100, float64(years));
+}
+----
+
+== Go Types & Null Values
+
+Go arrive avec plusieurs types built-in:
+
+* int : un nombre entier
+* float64 : un nombre décimal
+* string : une valeur entre " et " qui contient un texte. On peut aussi utiliser des backtics.
+* bool : true ou false
+
+D’autres types moins courants existent:
+
+* uint : un entier non signé (positif)
+* int32 : un entier signé mais dans un range donné : entre -2147483688 et 2147483647
+* rune : un alias pour int32. Représente un unicode, utile pour gérer des caractères Unicodes
+* uint32 : un entier non signé sur 32 bits
+* int64 : un entier signé sur 64 bits
+* Il existe aussi d’autres type comme int8, uint8 qui fonctionnent de la même façon
+
+=== Null values
+
+Si on n’assigne pas de valeur à une variable, la valeur NULL lui est assignée qui dépend de son type.
+
+* int : 0
+* fload64 : 0,0
+* string : ""
+* bool : false
+
+== Outputting Values
+
+Pour afficher des valeurs, on utilise fmt.print, println, …
+
+[source, go]
+----
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	var investmentAmount = 1000
+	var expectedReturnRate = 5.5
+	var years = 10
+
+	var futureValue = float64(investmentAmount) * math.Pow(1 + expectedReturnRate / 100, float64(years));
+	fmt.Println(futureValue)
+}
+----
+
+Pour exécuter le programme en dev, on peut utiliser:
+
+[source, bash]
+----
+$ go run .
+1708.1444583535929
+----
+
+== Type Conversions & Explicit Type Assignment
+
+La formule est plutôt longue, notamment à cause des conversion de types.
+
+On peut forcer l’inférence des types lors de l’assignement en ajoutant le type explicitement.
+
+[source, go]
+----
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	var investmentAmount float64 = 1000
+	var expectedReturnRate = 5.5
+	var years float64 = 10
+
+	var futureValue = investmentAmount * math.Pow(1 + expectedReturnRate / 100, years);
+	fmt.Println(futureValue)
+}
+----
+
+== Using Alternative Variable Declaration Styles
+
+Il est possible de rendre le code plus concis.
+
+S’il n’y a pas de types forcés, on peut utiliser := pour de passer du mot clef var. Ça peut t’utiliser partout où on peut inférer le type.
+
+Il est aussi possible de déclarer plusieurs variables un une ligne.
+
+[source, go]
+----
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	investmentAmount, years, expectedReturnRate := 1000.0, 10.0, 5.5
+
+	futureValue := investmentAmount * math.Pow(1+expectedReturnRate/100, years)
+	fmt.Println(futureValue)
+}
+----
+
+== Making Sense Of Constant Values ("Constants")
+
+Ex: ajout de l’inflation.
+
+On ajoute une constante via le mot clef const, cette valeur ne pourra plus être modifiée plus tard dans le code.
+
+[source, go]
+----
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	const inflationRate = 2.5
+	investmentAmount, years, expectedReturnRate := 1000.0, 10.0, 5.5
+
+	futureValue := investmentAmount * math.Pow(1+expectedReturnRate/100, years)
+	futureRealValue := futureValue / math.Pow(1+inflationRate/100, years)
+
+	fmt.Println(futureValue)
+	fmt.Println(futureRealValue)
+}
+----
+
+== Understanding The Importance Of Variables
+
+Les variables peuvent être réassignées plus tard dans le code. Pour récupérer des informations à l’utilisateur, on utilise la fonction fmt.scan
+
+Pour modifier une variable, il faut passer un pointeur. Le & permet de récupérer un pointeur vers une variable.
+
+[source, go]
+----
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	const inflationRate = 2.5
+	years, expectedReturnRate := 10.0, 5.5
+	var investmentAmount float64
+
+	fmt.Scan(&investmentAmount)
+
+	futureValue := investmentAmount * math.Pow(1+expectedReturnRate/100, years)
+	futureRealValue := futureValue / math.Pow(1+inflationRate/100, years)
+
+	fmt.Println(futureValue)
+	fmt.Println(futureRealValue)
+}
+----
+
+== Improved User Input Fetching
+
+Pour améliorer la user experience, il faudrait dire à l’utilisateur ce que l’on attend.
+Il faut aussi toujours définir le type de la variable que l’on va récupérer.
+
+[source, go]
+----
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	const inflationRate = 2.5
+	var investmentAmount, years, expectedReturnRate float64
+
+	fmt.Print("Investment amount: ")
+	fmt.Scan(&investmentAmount)
+	fmt.Print("Years: ")
+	fmt.Scan(&years)
+	fmt.Print("Expected return rate: ")
+	fmt.Scan(&expectedReturnRate)
+
+	futureValue := investmentAmount * math.Pow(1+expectedReturnRate/100, years)
+	futureRealValue := futureValue / math.Pow(1+inflationRate/100, years)
+
+	fmt.Println(futureValue)
+	fmt.Println(futureRealValue)
+}
+----
+
+== fmt.Scan() Limitations
+
+Scan n’est pas adapté à récupérer des inputs composés de plusieurs mots. C’est juste adapté aux mots simples ou aux nombres.
+
+On verra plus tard d’autres fonctions plus adaptées.
+
+== Exercise: Building a Profit Calculator
+
+Construire un outil en ligne de commande "Profit Calculator" qui demande les revenus, les dépenses et le tax rate et calcule :
+
+* les earnings before tax (EBT)
+* les earnings after tax (profit)
+* le ratio EBT/profit
+
+Et affiche ces valeurs
+
+== Exercise Solution
+
+[source, go]
+----
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	var revenue, expenses, taxRate float64
+
+	fmt.Print("Revenue: ")
+	fmt.Scan(&revenue)
+	fmt.Print("Expenses: ")
+	fmt.Scan(&expenses)
+	fmt.Print("tax rate: ")
+	fmt.Scan(&taxRate)
+
+	earningsBeforeTax := revenue - expenses
+	profit := earningsBeforeTax * (1 - taxRate/100)
+	ratio := profit / earningsBeforeTax
+
+	fmt.Println(earningsBeforeTax)
+	fmt.Println(profit)
+	fmt.Println(ratio)
+}
+----
+
+== Formatting Strings (Text) - Basics
+
+[source, go]
+----
+	fmt.Println("Future Value: ", futureValue)
+	fmt.Println("Future Value (adjusted for Inflation):", futureRealValue)
+----
+
+== Formatting Floats in Strings
+
+* %v permet d’afficher la valeur dans le formattage par défaut.
+
+[source, go]
+----
+	fmt.Printf("Future Value: %v\nFuture Value (adjusted for Inflation): %v\n", futureValue, futureRealValue)
+----
+
+== Creating Formatted Strings
+
+* %T permet d’afficher le type d’une valeur
+* %.2f permet d’afficher 2 décimales
+
+[source, go]
+----
+	fmt.Printf("Future Value: %.2f\n", futureValue)
+	fmt.Printf("Future Value (adjusted for Inflation): %.2f\n", futureRealValue)
+----
+
+La https://pkg.go.dev/fmt[doc] apporte plein d’infos dessus
+
+Possibilité de stocker les chaînes formattées dans une variable:
+
+[source, go]
+----
+	formmattedFV := fmt.Sprintf("Future Value: %v\n", futureValue)
+	formmattedFRV := fmt.Sprintf("Future Value (adjusted for Inflation): %1f", futureRealValue)
+
+	fmt.Print(formmattedFV, formmattedFRV)
+----
+
+== Building Multiline Strings
+
+[source, go]
+----
+fmt.Printf(`Future Value: %v
+Future Value (adjusted for Inflation): %1f`, futureValue, futureRealValue)
+----
+
+== Understanding Functions
+
+"Code on demand".
+
+[source, go]
+----
+func outputText(̤text string) {
+ 	fmt.Print(text)
+}
+----
+
+Possible de passer plusieurs paramètres
+
+[source, go]
+----
+func outputText(̤text1 string, text2 string)
+----
+
+Et de rassembler les paramètres de type équivalents
+
+[source, go]
+----
+func outputText(̤text1, text2 string)
+----
+
+== Functions: Return Values & Variable Scope
+
+* Il faut typer le retour des fonctions
+* Possibilité de retourner plusieurs valeurs
+
+[source, go]
+----
+futureValue, futureRealValue := calculateFutureValues(investmentAmount, years, expectedReturnRate, inflationRate)
+
+[...]
+
+func calculateFutureValues(investmentAmount, years, expectedReturnRate, inflationRate float64) (float64, float64) {
+	futureValue := investmentAmount * math.Pow(1+expectedReturnRate/100, years)
+	realFutureValue := futureValue / math.Pow(1+inflationRate/100, years)
+	return futureValue, realFutureValue
+}
+----
+
+== An Alternative Return Value Syntax
+
+On peut déclarer les variables de retour dans la signature et on n’aura pas besoin de les déclarer, ni de les retourner explicitement.
+
+[source, go]
+----
+func calculateFutureValues(investmentAmount, years, expectedReturnRate, inflationRate float64) (fv float64, rfv float64) {
+	fv = investmentAmount * math.Pow(1+expectedReturnRate/100, years)
+	rfv = fv / math.Pow(1+inflationRate/100, years)
+	return
+}
+----
+
+== Exercise: Working with Functions
+
+Dans profit_calulator:
+
+* Remplacer le code de lecture de valeur par une fonction qui lit et renvoie la valeur
+* Remplacer les calculs par des fonctions de calcul
+
+Solution:
+
+[source, go]
+----
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	revenue := getUserInput("Revenue:")
+	expenses := getUserInput("Expenses:")
+	taxRate := getUserInput("tax rate:")
+
+	earningsBeforeTax, profit, ratio := calculateFinancials(revenue, expenses, taxRate)
+
+	fmt.Println(earningsBeforeTax)
+	fmt.Println(profit)
+	fmt.Println(ratio)
+}
+
+func getUserInput(text string) float64 {
+	var value float64
+	fmt.Print(text)
+	fmt.Scan(&value)
+	return value
+}
+
+func calculateFinancials(revenue, expences, taxrate float64) (earningsBeforeTax float64, profit float64, ratio float64) {
+	earningsBeforeTax = revenue - expences
+	profit = earningsBeforeTax * (1 - taxrate/100)
+	ratio = profit / earningsBeforeTax
+
+	return earningsBeforeTax, profit, ratio
+}
+----
+
+== Onwards to Control Structures
+
+Permet de décider quel code s’exécute sous quelles conditions.
+
+Création d’un nouveau module dans un nouveau répertoire :
+
+[source, bash]
+----
+go mod init example.com/bank
+----
+
+Objectif : création d’une application qui simule une banque.
+
+== Introducing "if" Statements & Booleans
+
+Permet d’exécuter des bouts de code en fonction d’une condition.
+
+Conditions:
+
+* "==" : égalité
+* "&&" : AND
+* "||" : OR
+
+[source, go]
+----
+package main
+
+import "fmt"
+
+func main() {
+	var accountBalance float64 = 1000
+
+	fmt.Println("Welcome to Go Bank")
+	fmt.Println("What do you want to do?")
+	fmt.Println("1. Check balance")
+	fmt.Println("2. Deposit money")
+	fmt.Println("3. Withdraw money")
+	fmt.Println("4. Exit")
+
+	var choice int
+	println("Your choice: ")
+	fmt.Scan(&choice)
+
+	if choice == 1 {
+		fmt.Println("Your balance is: ", accountBalance)
+	}
+
+	fmt.Println("Your choice: ", choice)
+
+}
+----
+
+== Working with "else if"
+
+[source, go]
+----
+	if choice == 1 {
+		fmt.Println("Your balance is: ", accountBalance)
+	} else if choice == 2 {
+		fmt.Println("Your deposit: ")
+		var depositAmount float64
+		fmt.Scan(&depositAmount)
+		accountBalance += depositAmount
+		fmt.Println("Balance updated! New amount: ", accountBalance)
+	}
+----
+
+== Exercise "if" Statements
+
+Ajouter le choix 3
+
+[source, go]
+----
+	if choice == 1 {
+		fmt.Println("Your balance is: ", accountBalance)
+	} else if choice == 2 {
+		fmt.Println("Your deposit: ")
+		var depositAmount float64
+		fmt.Scan(&depositAmount)
+		accountBalance += depositAmount
+		fmt.Println("Balance updated! New amount: ", accountBalance)
+	} else if choice == 3 {
+		fmt.Println("Your withdrawal: ")
+		var withdrawalAmount float64
+		fmt.Scan(&withdrawalAmount)
+		accountBalance -= withdrawalAmount
+		fmt.Println("Balance updated! New amount: ", accountBalance)
+	}
+----
+
+== Using "else"
+
+Permet de se comporter pour toutes les autres valeurs.
+
+[source, go]
+----
+	if choice == 1 {
+		fmt.Println("Your balance is: ", accountBalance)
+	} else if choice == 2 {
+		fmt.Println("Your deposit: ")
+		var depositAmount float64
+		fmt.Scan(&depositAmount)
+		accountBalance += depositAmount
+		fmt.Println("Balance updated! New amount: ", accountBalance)
+	} else if choice == 3 {
+		fmt.Println("Your withdrawal: ")
+		var withdrawalAmount float64
+		fmt.Scan(&withdrawalAmount)
+		accountBalance -= withdrawalAmount
+		fmt.Println("Balance updated! New amount: ", accountBalance)
+	} else {
+		fmt.Println("Goodbye!")
+	}
+----
+
+== Nested "if" Statements & Using "return" to Stop Function Execution
+
+Il est toujours possible de faire un return sans valeur pour arrêter l’exécution.
+
+[source, go]
+----
+	if choice == 1 {
+		fmt.Println("Your balance is: ", accountBalance)
+	} else if choice == 2 {
+		fmt.Println("Your deposit: ")
+		var depositAmount float64
+		fmt.Scan(&depositAmount)
+
+		if depositAmount <= 0 {
+			fmt.Println("Invalid amount. Must be greater than 0.")
+			return
+		}
+
+		fmt.Println("Your deposit amount: ", depositAmount)
+
+		accountBalance += depositAmount
+		fmt.Println("Balance updated! New amount: ", accountBalance)
+	} else if choice == 3 {
+		fmt.Println("Your withdrawal: ")
+		var withdrawalAmount float64
+		fmt.Scan(&withdrawalAmount)
+
+		if withdrawalAmount <= 0 {
+			fmt.Println("Invalid amount. Must be greater than 0.")
+			return
+		}
+
+		if withdrawalAmount > accountBalance {
+			fmt.Println("Invalid amount. You can’t withdraw more than you have.")
+			return
+		}
+
+		accountBalance -= withdrawalAmount
+		fmt.Println("Balance updated! New amount: ", accountBalance)
+	} else {
+		fmt.Println("Goodbye!")
+	}
+----
+
+== Repeating Code With "for" Loops
+
+Pour exécuter un code plusieurs fois jusqu’à ce qu’une certaine condition soit atteinte.
+
+En go, on a accès juste au for (pas de loop).
+
+[source, go]
+----
+	for i := 0; i < 2; i++ {
+
+	}
+----
+
+Mais on n’a pas une boucle infinie pour notre besoin.
+
+== Infinite Loops, "break" & "continue"
+
+[source, go]
+----
+for {
+
+}
+----
+
+Permet de faire une boucle infinie.
+
+Pour sortir, on peut faire appel à return (pour sortir de la fonction) ou break (pour sortir de la boucle).
+
+Si l’on veut seulement sortir de l’itération suivante, on peut utiliser continue.
+
+[source, go]
+----
+func main() {
+	var accountBalance float64 = 1000
+
+	for {
+		fmt.Println("Welcome to Go Bank")
+		fmt.Println("What do you want to do?")
+		fmt.Println("1. Check balance")
+		fmt.Println("2. Deposit money")
+		fmt.Println("3. Withdraw money")
+		fmt.Println("4. Exit")
+
+		var choice int
+		println("Your choice: ")
+		fmt.Scan(&choice)
+
+		if choice == 1 {
+			fmt.Println("Your balance is: ", accountBalance)
+		} else if choice == 2 {
+			fmt.Println("Your deposit: ")
+			var depositAmount float64
+			fmt.Scan(&depositAmount)
+
+			if depositAmount <= 0 {
+				fmt.Println("Invalid amount. Must be greater than 0.")
+				continue
+			}
+
+			fmt.Println("Your deposit amount: ", depositAmount)
+
+			accountBalance += depositAmount
+			fmt.Println("Balance updated! New amount: ", accountBalance)
+		} else if choice == 3 {
+			fmt.Println("Your withdrawal: ")
+			var withdrawalAmount float64
+			fmt.Scan(&withdrawalAmount)
+
+			if withdrawalAmount <= 0 {
+				fmt.Println("Invalid amount. Must be greater than 0.")
+				continue
+			}
+
+			if withdrawalAmount > accountBalance {
+				fmt.Println("Invalid amount. You can’t withdraw more than you have.")
+				continue
+			}
+
+			accountBalance -= withdrawalAmount
+			fmt.Println("Balance updated! New amount: ", accountBalance)
+		} else {
+			fmt.Println("Goodbye!")
+			break
+		}
+
+		fmt.Println("Thanks for coosing our bank")
+	}
+}
+----
+
+== Conditional For Loops
+
+Il existe aussi une autre boucle for qui prend une condition en paramètre mais que l’on verra plus tard dans le cours.
+
+[source, go]
+----
+for someCondition {
+	// ...
+}
+----
+
+== Making Sense of "switch" Statements
+
+Pour éviter les if/elseif/else à rallonge, on peut utiliser les switch.
+
+[source, go]
+----
+		switch choice {
+		case 1:
+			fmt.Println("Your balance is: ", accountBalance)
+		case 2:
+			fmt.Println("Your deposit: ")
+			var depositAmount float64
+			fmt.Scan(&depositAmount)
+
+			if depositAmount <= 0 {
+				fmt.Println("Invalid amount. Must be greater than 0.")
+				continue
+			}
+
+			fmt.Println("Your deposit amount: ", depositAmount)
+
+			accountBalance += depositAmount
+			fmt.Println("Balance updated! New amount: ", accountBalance)
+		case 3:
+			fmt.Println("Your withdrawal: ")
+			var withdrawalAmount float64
+			fmt.Scan(&withdrawalAmount)
+
+			if withdrawalAmount <= 0 {
+				fmt.Println("Invalid amount. Must be greater than 0.")
+				continue
+			}
+
+			if withdrawalAmount > accountBalance {
+				fmt.Println("Invalid amount. You can’t withdraw more than you have.")
+				continue
+			}
+
+			accountBalance -= withdrawalAmount
+			fmt.Println("Balance updated! New amount: ", accountBalance)
+		default:
+			fmt.Println("Goodbye!")
+			break
+		}
+----
+
+Attention: on n’ajoute pas de break à la fin de chaque case. Un break s’applique à la boucle encadrante du switch/case.
+
+== Writing To Files
+
+[source, go]
+----
+import "os"
+
+func writeBalanceToFile(balance float64) {
+	balanceText := fmt.Sprint(balance)
+	os.WriteFile("balance.txt", []byte(balanceText), 0644)
+
+}
+----
+
+== Reading From Files
+
+Si on ne veut pas utiliser une variable, on a le symbole _ à utiliser, comme pour ne pas avoir le retour d’erreur.
+
+[source, go]
+----
+func getBalanceFromFile() float64 {
+	data, _ := os.ReadFile(balanceFileName)
+	balanceText := string(data) // can’t extract a float from a byte[]
+	balance, _ := strconv.ParseFloat(balanceText, 64)
+
+	return balance
+}
+----
+
+== Handling Errors
+
+En go, on n’utilise pas de try/catch pour gérer les erreurs.
+Les erreurs ne crashent pas l’application.
+Les fonctions qui peuvent provoquer une erreur renvoient une valeur d’erreur que l’on peut ensuite traiter. S’il n’y a pas d’erreur, la variable contient la valeur spéciale nil.
+
+[source, go]
+----
+func getBalanceFromFile() (float64, error) {
+	data, err := os.ReadFile(balanceFileName)
+
+	if err != nil {
+		return 1000, errors.New("Error reading balance file.")
+	}
+	balanceText := string(data) // can’t extract a float from a byte[]
+	balance, err := strconv.ParseFloat(balanceText, 64)
+
+	if err != nil {
+		return 1000, errors.New("Error parsing stored balance value.")
+	}
+
+	return balance, nil
+}
+
+func main() {
+	var accountBalance, err = getBalanceFromFile()
+
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println(err)
+		fmt.Println("----------")
+	}
+[...]
+}
+----
+
+== Time to Panic!
+
+Quand on a des erreurs, il y a des cas où on ne veut pas continuer le programme.
+
+Pour ça, on va utiliser panic.
+
+[source, go]
+----
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println(err)
+		fmt.Println("----------")
+		panic("Can’t continue, sorry.")
+	}
+----
+
+== Section Exercise - The Task
+
+Reprendre le "profit_calculator" et :
+
+. Valider les entrées de l’utilisateur
+    * Afficher le message d’erreur et sortir du programme si une entrée invalide est entrée
+    * Pas de nombre négatif
+    * Pas 0
+. Stocker les valeurs calculées dans un fichier
+
+== Section Exercise - The solution
+
+[source, go]
+----
+package main
+
+import (
+	"errors"
+	"fmt"
+	"os"
+)
+
+func main() {
+	revenue, err := getUserInput("Revenue:")
+	//if err != nil {
+	//	fmt.Println(err)
+	//	return
+	//}
+
+	expenses, err := getUserInput("Expenses:")
+	//if err != nil {
+	//	fmt.Println(err)
+	//	return
+	//}
+
+	taxRate, err := getUserInput("tax rate:")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	earningsBeforeTax, profit, ratio := calculateFinancials(revenue, expenses, taxRate)
+
+	fmt.Println(earningsBeforeTax)
+	fmt.Println(profit)
+	fmt.Println(ratio)
+	storeResults(earningsBeforeTax, profit, ratio)
+}
+
+func getUserInput(text string) (float64, error) {
+	var value float64
+	fmt.Print(text)
+	fmt.Scan(&value)
+
+	if value <= 0 {
+		return 0, errors.New("Value must be a positive number.")
+	}
+
+	return value, nil
+}
+
+func storeResults(ebt, profit, ration float64) {
+	results := fmt.Sprintf("EBT: %f\nProfit: %f\nRatio: %f\n", ebt, profit, ration)
+	os.WriteFile("results.txt", []byte(results), 0644)
+}
+
+func calculateFinancials(revenue, expences, taxrate float64) (earningsBeforeTax float64, profit float64, ratio float64) {
+	earningsBeforeTax = revenue - expences
+	profit = earningsBeforeTax * (1 - taxrate/100)
+	ratio = profit / earningsBeforeTax
+
+	return earningsBeforeTax, profit, ratio
+}
+----
+
+== Module Summary
+
+On a vu les fondations du langage pour pouvoir construire dessus.

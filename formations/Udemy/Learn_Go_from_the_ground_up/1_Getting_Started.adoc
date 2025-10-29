@@ -19,7 +19,7 @@ Opensource programming language developped by Google (2007)
 
 Très populaire :
 
-* Focus sur la simplicité, la clareté et la scalabilité
+* Focus sur la simplicité, la clarté et la scalabilité
 * Très performant, focus sur la concurrence
 * Beaucoup de fonctionnalités déjà intégrées dans le langage : pas besoin de chercher des librairies externes
 * Typage statique, type safety, gestion d’erreur à la compilation plutôt qu’au runtime
@@ -60,7 +60,7 @@ Pour exécuter
 
 [source,bash]
 ----
-go run app.go
+go run investment_calculator.go
 ----
 
 https://codesandbox.io/p/devbox/go-getting-started-forked-ydhxqc

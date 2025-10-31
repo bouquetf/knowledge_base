@@ -5,3 +5,165 @@
 :source-highlighter: rouge
 :sectlinks:
 
+= Working with Packages
+
+== Module Introduction
+
+Objectif : aller un peu plus profondément dans Go.
+
+-> Packages
+
+Explorer :
+- comment spliter le code en plusieurs fichiers
+- comment spliter les fichiers dans plusieurs packages
+- comment importer et utiliser des packages custom
+
+== Splitting Code Accross Files In The Same Package
+
+On peut créer un autre fichier avec les fonctions à regrouper.
+
+On peut aussi utiliser ces fonctions sans import dans le même package sans avoir à les importer.
+
+Attention : les imports ne sont accessibles que dans le package qui les importe.
+
+communication.go:
+[source, go]
+----
+package main
+
+import "fmt"
+
+func presentOptions() {
+	fmt.Println("Welcome to Go Bank")
+	fmt.Println("What do you want to do?")
+	fmt.Println("1. Check balance")
+	fmt.Println("2. Deposit money")
+	fmt.Println("3. Withdraw money")
+	fmt.Println("4. Exit")
+}
+----
+
+bank.go:
+[source, go]
+----
+func main() {
+        [...]
+
+		presentOptions()
+
+		[...]
+}
+----
+
+== Why Would You Use More Than One Package ?
+
+Des fois, on a besoin de séparer le code en plusieurs packages. Par exemple pour du code utilitaire à réutiliser dans différents projets.
+
+== Preparing Code For Multiple Packages
+
+On rend les fonctions de lecture/écriture dans un fichier plus génériques
+
+[source, go]
+----
+func writeFloatToFile(value float64, fileName string) {
+	valueText := fmt.Sprint(value)
+	os.WriteFile(fileName, []byte(valueText), 0644)
+}
+
+func getFloatFromFile(fileName string) (float64, error) {
+	data, err := os.ReadFile(fileName)
+
+	if err != nil {
+		return 1000, errors.New("Error reading file.")
+	}
+
+	valueText := string(data) // can’t extract a float from a byte[]
+	value, err := strconv.ParseFloat(valueText, 64)
+
+	if err != nil {
+		return 1000, errors.New("Error parsing stored value.")
+	}
+
+	return value, nil
+}
+----
+
+== Splitting Code Accross Multiple Packages
+
+Chaque package doit avoir son propre répertoire.
+
+== Importing Packages
+
+Pour importer un package, il faut importer le nom du module suivi du nom du package :
+
+[source, go]
+----
+import "example.com/bank/fileops"
+----
+
+== Exporting & Importing Identifiers (Variables, Functions & More)
+
+Seulement ce qui commence par des majuscules peut être exporté.
+
+[sourcek go]
+----
+func WriteFloatToFile(value float64, fileName string) {
+[...]
+}
+
+func GetFloatFromFile(fileName string) (float64, error) {
+[...]
+}
+----
+
+== Using Third-Party Packages
+
+Go arrive avec énormément de packages internes qui couvrent beaucoup de cas d’utilisation.
+
+Cependant, il est possible de récupérer des packages communautaires que l’on peut trouver via ce moteur de recherche: https://pkg.go.dev
+
+Pour installer un package:
+
+[source, go]
+----
+go get <url>
+----
+
+Cela ajoute le package au projet en le downloadant localement (mais pas dans le répertoire du projet).
+
+Puis on l’importe classiquement dans nos répertoires.
+
+[source, go]
+----
+package main
+
+import "github.com/Pallinder/go-randomdata"
+
+func main() {
+    [...]
+    fmt.Println("Welcome to Go Bank!")
+	fmt.Println("Reach us 24/7 ", randomdata.PhoneNumber())
+	[...]
+----
+
+Et dans le go.mod:
+
+[source, go]
+----
+module example.com/bank-with-packages
+
+go 1.25.3
+
+require github.com/Pallinder/go-randomdata v1.2.0 // indirect
+----
+
+== Module Summary
+
+Ce que l’on a appris :
+
+* Idées principales des packages
+* créer son propre packages
+* organisation des fichiers
+* organisation des packages
+* importer/exporter son propre package
+* importer un package communautaire

@@ -5,3 +5,115 @@
 :source-highlighter: rouge
 :sectlinks:
 
+= Understanding Pointers
+== Module Introduction
+
+Pointeur : variable qui contiennent des adresses.
+
+[source, go]
+----
+age:=32
+pointer_age:=&age
+----
+
+Pourquoi on en a besoin ?
+
+* ne pas avoir besoin de copier des valeurs quand ce n’est pas nécessaire. Par défaut, quand on passe des variables à des fonctions, go crée une copie de la valeur passée qui la passe à la fonction puis la supprime.
+Lorsque les valeurs sont très grosses en mémoire, ça peut être un problème (l’usage reste assez rare dans la plupart des cas). Quand on passe un pointeur, la valeur n’est pas copiée.
+* muter directement certaines valeurs : utile pour écrire des fonctions qui vont modifier la valeur stockée à l’adresse du pointeur. Attention, ça peut introduire des effets de bord compliqués à débugger.
+
+== Writing Code Without Pointers
+
+[source, go]
+----
+package main
+
+import "fmt"
+
+func main() {
+	age := 32
+	fmt.Println("Age: ", age)
+	adultYears := getAdultYears(age)
+	fmt.Println("Adult Age: ", adultYears)
+}
+
+func getAdultYears(age int) int {
+	return age - 18
+}
+----
+
+Rien n’est modifié dans ce code vu qu’on copie la valeur de age dans la fonction.
+
+== Creating a Pointer
+
+[source, go]
+----
+var agePointer *int
+
+agePointer := &age
+----
+
+== Pointers as Values
+
+Pour déréférencer un pointeur : *<nomPointeur>
+
+[source, go]
+----
+	age := 32
+	var agePointer *int
+	agePointer = &age
+	fmt.Println("Age: ", *agePointer)
+----
+
+== A Pointer’s Null Value
+
+Un pointeur non initialisé a pour valeur "nil".
+
+== Using Pointers & Passing Pointers To Functions
+
+Exemple pour ne pas avoir à copier la valeur passée :
+
+[source, go]
+----
+func main() {
+	age := 32
+	var agePointer *int
+	agePointer = &age
+	fmt.Println("Age: ", *agePointer)
+	adultYears := getAdultYears(agePointer)
+	fmt.Println("Adult Age: ", adultYears)
+}
+
+func getAdultYears(age *int) int {
+	return *age - 18
+}
+----
+
+En pratique, on ne ferait pas ça pour un entier
+
+== Using Pointers For Data Mutation
+
+Pour modifier la valeur pointée :
+
+[source, go]
+----
+func main() {
+	age := 32
+	var agePointer *int
+	agePointer = &age
+	fmt.Println("Age: ", *agePointer)
+	editAgeToAdultYears(agePointer)
+	fmt.Println("Adult Age: ", age)
+}
+
+func editAgeToAdultYears(age *int) {
+	*age = *age - 18
+}
+----
+
+== Example: The Scan() Function Uses Pointers
+
+Scanf dans les exemples précédents modifiait une variable depuis son pointeur.
+
+== Module Summary
+

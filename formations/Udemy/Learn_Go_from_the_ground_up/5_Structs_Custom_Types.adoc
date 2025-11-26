@@ -5,3 +5,621 @@
 :source-highlighter: rouge
 :sectlinks:
 
+= Structs & Custom Types
+== Module Introduction
+
+Construction de valeurs complexes : structs
+
+* Qu’est-ce que c’est ?
+* Comment ça se construit et s’utilise ?
+* Comment ajouter des fonctions dans des structures ?
+
+== The starting Project
+
+[source, go]
+----
+package main
+
+import "fmt"
+
+func main() {
+	firstName := getUserData("Please enter your first name: ")
+	lastName := getUserData("Please enter your last name: ")
+	birthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
+
+	// ... do something awesome with the gathered data!
+
+	fmt.Println(firstName, lastName, birthdate)
+}
+
+func getUserData(promptText string) string {
+	fmt.Println(promptText)
+	var value string
+	fmt.Scan(&value)
+	return value
+}
+----
+
+== Which Problem Do Structs Solve?
+
+Objectif : regrouper des données qui sont liées comme dans le code précédent afin de rendre leur utilisation plus simple.
+
+== Defining A Struct Type
+
+On crée un nouveau type user. Ces types commencent la plupart du temps par une majuscule pour pouvoir les exporter.
+On ajoute ensuite chacun des champs qui composent cette structure.
+
+[source, go]
+----
+type user struct {
+	firstName string
+	lastName  string
+	birthDate string
+	createdAt time.Time
+}
+----
+
+== Instantiating Structs & Struct Literal Notation
+
+[source, go]
+----
+type user struct {
+	firstName string
+	lastName  string
+	birthDate string
+	createdAt time.Time
+}
+
+func main() {
+	firstName := getUserData("Please enter your first name: ")
+	lastName := getUserData("Please enter your last name: ")
+	birthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
+
+	var appUser user
+	appUser = user{
+		firstName: firstName,
+		lastName:  lastName,
+		birthDate: birthdate,
+		createdAt: time.Now()}
+
+	// ... do something awesome with the gathered data!
+
+	outputUserDetails(firstName, lastName, birthdate)
+}
+----
+
+== Alternative Struct Literal Notation & Struct Null Values
+
+Possible de ne pas passer le nom des champs lorsque l’on crée la structure, mais il faut bien respecter le même ordre.
+Si des valeurs ne sont pas settées, alors la valeur null est passée.
+
+[source, go]
+----
+	appUser = user{
+		firstName,
+		lastName,
+		birthdate,
+		time.Now()}
+----
+
+== Passing Struct Values As Arguments
+
+[source, go]
+----
+func main() {
+	firstName := getUserData("Please enter your first name: ")
+	lastName := getUserData("Please enter your last name: ")
+	birthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
+
+	var appUser user
+	appUser = user{
+		firstName: firstName,
+		lastName:  lastName,
+		birthDate: birthdate,
+		createdAt: time.Now()}
+
+	// ... do something awesome with the gathered data!
+
+	outputUserDetails(appUser)
+}
+
+func outputUserDetails(u user) {
+	fmt.Println(u.firstName, u.lastName, u.birthDate)
+}
+----
+
+== Structs & Pointers
+
+Passer un pointeur ici permet d’éviter la copie de toute la structure
+
+Go offre un raccourcis qui fait qu’on n’a pas besoin de déréférencer le pointeur pour les structures.
+
+[source, go]
+----
+func main() {
+	firstName := getUserData("Please enter your first name: ")
+	lastName := getUserData("Please enter your last name: ")
+	birthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
+
+	var appUser user
+	appUser = user{
+		firstName: firstName,
+		lastName:  lastName,
+		birthDate: birthdate,
+		createdAt: time.Now()}
+
+	// ... do something awesome with the gathered data!
+
+	outputUserDetails(&appUser)
+}
+
+func outputUserDetails(u *user) {
+	fmt.Println(u.firstName, u.lastName, u.birthDate)
+}
+----
+
+== Introducing Methods
+
+Pour associer une méthode à une structure :
+
+[source, go]
+----
+func (u user) outputUserDetails() {
+	fmt.Println(u.firstName, u.lastName, u.birthDate)
+}
+
+func main() {
+	[...]
+	u.outputUserDetails()
+	[...]
+}
+----
+
+== Mutation Methods
+
+[source, go]
+----
+func (u *user) clearUserName() {
+	u.firstName = ""
+	u.lastName = ""
+}
+----
+
+== Using Creation / Constructor Functions
+
+par convention new<NomStruct> mais rien d’obligatoire.
+
+[source, go]
+----
+func newUser(firstName, lastName, birthdate string) user {
+	return user{
+		firstName: firstName,
+		lastName:  lastName,
+		birthDate: birthdate,
+		createdAt: time.Now()}
+}
+----
+
+Il peut être utile d’utiliser des pointeurs plutôt que directement des structures afin de ne pas copier la valeur à chaque fois qu’elle est utilisée.
+
+== Using Constructor Fonctions For Validation
+
+On peut utiliser le constructeur pour vérifier que les paramètres passés sont bien formés avant de créer la structure de données.
+
+[source, go]
+----
+func newUser(firstName, lastName, birthdate string) (*user, error) {
+	if firstName == "" || lastName == "" || birthdate == "" {
+		return nil, errors.New("First name, last name and birthdate are required")
+	}
+
+	return &user{
+		firstName: firstName,
+		lastName:  lastName,
+		birthDate: birthdate,
+		createdAt: time.Now()}, nil
+}
+
+[...]
+	appUser, err := newUser(firstName, lastName, birthdate)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+[...]
+----
+
+== Struct, Packages & Exports
+
+Pour pouvoir accéder aux champs dans un autre package, il faut qu’ils commencent par une majuscule aussi.
+
+[source, go]
+----
+type User struct {
+	FirstName string
+	LastName  string
+	BirthDate string
+	CreatedAt time.Time
+}
+----
+
+Dans notre cas, on n’en a pas forcément besoin, donc on peut garder les champs pour qu’ils commencent par une minuscule.
+
+== Exposing Methods & A Different Constructor Function Name
+
+La règle des majuscules s’applique aussi pour les méthodes et constructeurs.
+
+[source, go]
+----
+func NewUser(firstName, lastName, birthdate string) (*User, error)
+
+func (u *User) OutputUserDetails()
+
+func (u *User) ClearUserName()
+----
+
+Par convention, le constructeur peut s’appeler juste New.
+
+== Struct Embedding
+
+Construire une structure à partir d’une autre. Un peu l’idée de l’héritage.
+
+[source, go]
+----
+type User struct {
+	firstName string
+	lastName  string
+	birthDate string
+	createdAt time.Time
+}
+
+type Admin struct {
+	email string
+	password string
+	User
+}
+
+func main() {
+	firstName := getUserData("Please enter your first name: ")
+	lastName := getUserData("Please enter your last name: ")
+	birthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
+	var appUser *user.User
+
+	appUser, err := user.New(
+		firstName,
+		lastName,
+		birthdate)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	admin, _ := user.NewAdmin("test.example.com", "test123")
+
+	admin.OutputUserDetails()
+	admin.ClearUserName()
+	admin.OutputUserDetails()
+
+	appUser.OutputUserDetails()
+	appUser.ClearUserName()
+	appUser.OutputUserDetails()
+}
+----
+
+== Structs - A Summary
+
+* Grouper des variables sous forme de structures
+* Modification de structures
+* Constructeurs
+* Passage de structures à des fonctions
+* Extension/Héritage de structures
+
+== Creating Other Custom Types & Adding Methods
+
+On peut utiliser le mot clef type pour créer des alias de types pré définis comme des "types locaux".
+
+[source, go]
+----
+package main
+
+type customString string
+
+func main() {
+	var name customString
+
+	[...]
+}
+----
+
+Ça pourra être utile notamment pour les Array et Map par exemple.
+
+
+Il est aussi possible d’ajouter des fonction embarquées dans ces nouveaux types locaux :
+
+[source, go]
+----
+
+func (text customString) log() {
+	fmt.Println(text)
+}
+
+func () {
+	var name customType = "Max"
+
+	name.log()
+}
+----
+
+== Practice Project: Getting User Input
+
+Nouveau projet plus proche de la réalité : un projet de bloc notes.
+
+L’idée est d’avoir une liste de notes dans un fichier json.
+
+Exercice: Créer une ébauche de programme qui demande à l’utilisateur le titre et le nom de la note et gère les erreurs.
+
+[source, go]
+----
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func main() {
+	title, content, err := getNoteData()
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("Title: ", title)
+	fmt.Println("Content: ", content)
+}
+
+func getNoteData() (string, string, error) {
+	title, err := getUserInput("Note title:")
+	if err != nil {
+		fmt.Println(err)
+		return "", "", err
+	}
+	content, err := getUserInput("Note content:")
+	if err != nil {
+		fmt.Println(err)
+		return "", "", err
+	}
+
+	return title, content, nil
+}
+
+func getUserInput(prompt string) (string, error) {
+	fmt.Print(prompt)
+	var value string
+	fmt.Scanln(&value)
+	if value == "" {
+		return "", errors.New("Invalid Input.")
+	}
+	return value, nil
+}
+----
+
+== Practice Project: Creating a Struct & Constructor Fonction
+
+Exercice: Créer un nouveau package "note" qui permettra de stocker les notes et le constructor qui permet de créer une nouvelle note. Une note contient un title, content et createdAt.
+
+[source, go]
+----
+package note
+
+import (
+	"errors"
+	"time"
+)
+
+type Note struct {
+	title     string
+	content   string
+	createdAt time.Time
+}
+
+func New(title, content string) (Note, error) {
+	if title == "" || content == "" {
+		return Note{}, errors.New("Invalid Input.")
+	}
+	return Note{title, content, time.Now()}, nil
+}
+----
+
+[source, go]
+----
+package main
+
+import (
+	"fmt"
+
+	"example.com/note/note"
+)
+
+func main() {
+	title, content := getNoteData()
+
+	note, err := note.New(title, content)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+}
+
+func getNoteData() (string, string) {
+	title := getUserInput("Note title:")
+	content := getUserInput("Note content:")
+
+	return title, content
+}
+
+func getUserInput(prompt string) string {
+	fmt.Print(prompt)
+	var value string
+	fmt.Scanln(&value)
+
+	return value
+}
+----
+
+== Practice Project: Adding a Method
+
+Exercice: Ajouter une methode Display à la structure Note afin de pouvoir afficher le contenu d’une note.
+
+
+[source, go]
+----
+func (note Note) Display() {
+fmt.Printf("Your note titled %v has the following content: \n\n%v", note.title, note.content)
+}
+----
+
+[source, go]
+----
+func main() {
+	title, content := getNoteData()
+
+	note, err := note.New(title, content)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	note.Display()
+}
+----
+
+Dans cet état, on remarque un soucis avec la récupération d’informations. Scanln est prévu pour ne lire qu’un seul mot, pas des phrases.
+
+[source, bash]
+----
+$ go run .
+Note title:Learn Go
+Note content:Your note titled Learn has the following content:
+
+o
+$
+----
+
+== Practice Project: Handling Long User Input Text
+
+Pour gérer des entrées plus complexes en passant par le package bufio qui expose un Reader qui permet d’écouter sur une entrée comme os.Stdin.
+
+ReadString permet de lire jusqu’à un caractère (à mettre en single quote) qu’on lui passe en paramètre. Ce dernier caractère est gardé dans le texte retourné donc il faudra potentiellement le supprimer.
+
+[source, go]
+----
+func getUserInput(prompt string) string {
+    fmt.Printf("%v", prompt)
+
+	reader := bufio.NewReader(os.Stdin)
+
+	text, err := reader.ReadString('\n')
+
+	if err != nil {
+		return ""
+	}
+
+	text = strings.TrimSuffix(text, "\n")
+	text = strings.TrimSuffix(text, "\r") // pour windows
+
+	return text
+}
+----
+
+== Practice Project: Preparing Save To File Functionality
+
+Pour gérer les fichiers, on passe par os.WriteFile(<filename>, <content>, <rights>). On en profite pour formater à l’aide du package strings le nom du fichier.
+
+[source, go]
+----
+func (note Note) Save() {
+	fileName := strings.ReplaceAll(note.title, " ", "_")
+	fileName = strings.ToLower(fileName)
+
+	os.WriteFile(fileName, [...])
+
+}
+----
+
+== Practice Project: Encoding JSON Content
+
+Pour convertir une struct en fichier json, on utilise encoder/json et sa fonction Marshall et on renvoit l’erreur si ça échoue.
+Si l’écriture échoue aussi, on renvoit l’erreur retournée qui pourra être traité dans la fonction appelante.
+
+
+[source, go]
+----
+func (note Note) Save() error {
+	fileName := strings.ReplaceAll(note.title, " ", "_")
+	fileName = strings.ToLower(fileName)
+	json, err := json.Marshal(note)
+
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(
+		fileName,
+		json,
+		0644)
+}
+----
+
+Ce qui peut s’appeler ainsi:
+
+[source, go]
+----
+func main() {
+	title, content := getNoteData()
+
+	note, err := note.New(title, content)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	note.Display()
+	err = note.Save()
+
+	if err != nil {
+		fmt.Println("Saving the note failed.")
+		return
+	}
+
+	fmt.Println("Saving the note succeeded!")
+}
+----
+
+== Practice Project: Fixes
+
+La conversion json ne fonctionne que pour les champs publiques. Donc il faut qu’ils commencent par une letter capitale.
+
+== Understanding Struct Tags
+
+Pour json, on préfèrerais avoir des identifiants en minuscules, voire renommés plutôt que le nom tel que dans le code.
+
+Il est possible d’ajouter des métadata avec des backtics "`"
+
+[source, go]
+----
+type Note struct {
+	Title     string    `json:"title"`
+	Content   string    `json:"content"`
+	CreatedAt time.Time `json:"created_at"`
+}
+----
+
+Il est possible d’ajouter les metadata que l’on veut et ça dépendra de l’utilisation que l’on en fait dans les différentes fonction.

@@ -5,3 +5,254 @@
 :source-highlighter: rouge
 :sectlinks:
 
+= Interfaces & Generic Code
+
+- Qu’est-ce que sont les interfaces ?
+- Comment les créer et les utiliser ?
+
+== Module Introduction
+
+On fait évoluer le projet de la section précédente où on veut aussi permettre aux utilisateurs de non seulement écrire des notes, mais aussi des TODOs.
+
+== Preparing An Interface Use-Case
+
+Un TODO doit aussi être une structure mais avec juste un Content qui s’appellera Text. Doit aussi avoir un display et un save.
+
+1. On copie le package note en todo
+2. On change le nom du fichier go ainsi que son package à todo
+3. On remplace le nom de la structure, on modifie les champs
+
+[source, go]
+----
+type Todo struct {
+	Text string `json:"text"`
+}
+
+func (todo Todo) Display() {
+	fmt.Println(todo.Text)
+}
+
+func (todo Todo) Save() error {
+	fileName := "todo.json"
+	json, err := json.Marshal(todo)
+
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(
+		fileName,
+		json,
+		0644)
+}
+
+func New(content string) (Todo, error) {
+	if content == "" {
+		return Todo{}, errors.New("Invalid Input.")
+	}
+	return Todo{content}, nil
+}
+----
+
+== Finishing Interface Preparations
+
+On change le main.go pour utiliser notre nouveau package todo
+
+[source, go]
+----
+func main() {
+	todoText := getTodoData()
+
+	todo, err := todo.New(todoText)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	todo.Display()
+	err = todo.Save()
+
+	if err != nil {
+		fmt.Println("Saving the todo failed.")
+		return
+	}
+
+	fmt.Println("Saving the todo succeeded!")
+}
+
+func getTodoData() string {
+	text := getUserInput("Todo content:")
+
+	return text
+}
+----
+
+== Creating a First Interface
+
+Le code semble dupliqué et on aimerait pouvoir avoir des fonctions plus génériques qui s’adaptent en fonction de l’objet note ou todo à manipuler.
+
+Pour ce type de généricité, on va créer des interfaces.
+
+L’interface va définir l’ensemble des signatures de méthodes qui la compose, sans l’implémentation.
+
+Par convention, une interface termine par "er" comme ici "saver".
+
+[source, go]
+----
+type saver interface {
+Save() error
+}
+----
+
+== Using The Interface
+
+Une interface est un type, donc on peut l’utiliser partout où un type est requis.
+
+[source, go]
+----
+func saveData(data saver) error {
+	err := data.Save()
+
+	if err != nil {
+		fmt.Println("Saving the data.")
+		return err
+	}
+
+	fmt.Println("Saving the data succeeded!")
+	return nil
+}
+----
+
+On peut ensuite appeler directement saveData avec une note ou un todo, parce que l’interface dit seulement qu’une valeur valide doit contenir une méthode save().
+
+On go, on n’a pas besoin de connecter une interface aux structures qui les implémentent.
+
+[source, go]
+----
+   	note, err := note.New(title, content)
+	todo, err := todo.New(todoText)
+
+	saveData(note)
+	saveData(todo)
+----
+
+== Embedded Interfaces
+
+Sur le display et save, on a encore une sorte de duplication.
+
+On va créer un nouveau type displayer qui force une fonction display.
+
+Et un nouveau type outputtable (qui cette fois n’a pas besoin de respecter la convention en finissant par "er") qui contiendra les deux autres interfaces
+
+[source, go]
+----
+type displayer interface {
+    Display()
+}
+
+type outputtable interface {
+	Save()
+	Display()
+}
+----
+
+Puis, on peut définir une fonction pour gérer les outputs:
+
+[source, go]
+----
+func outputData(data outputtable) {
+	data.Display()
+	saveData(data)
+}
+----
+
+Une alternative est une interface qui embed d’autres interfaces :
+
+[source, go]
+----
+type outputtable interface {
+	saver
+	displayer
+}
+----
+
+Puis à l’utilisation:
+
+== The Special "Any Value Allowed" Type
+
+Pour accepter n’importe quel type en entrée d’une fonction, on peut utiliser le type spécial interface{}.
+
+Ensuite, avec un switch, on peut retrouver le type pour avoir un comportement différent par type.
+
+[source, go]
+----
+func printSomething(value interface{})
+{
+	fmt.Println(value)
+}
+----
+
+== Working with Type Switches
+
+[source, go]
+----
+func printSomething(value interface{})
+{
+	switch value.(type) {
+	case int:
+		fmt.Println("Integer: ", value)
+	case float64:
+		fmt.Println("Float: ", value)
+	default: // pas obligatoire si on ne veux rien faire
+		// ...
+	}
+
+	fmt.Println(value)
+}
+----
+
+== Extracting Type Information From Values
+
+Il existe une alternative étant tonné que value.(type) n’est accessible que dans un switch.
+
+[source, go]
+----
+func printSomething(value interface{})
+{
+	intVal, ok := value.(int)
+    // si ok est vrai, alors typeVal prend la valeur dans le type testé (int ici)
+	if ok {
+		fmt.Println("Int: ", intVal)
+	}
+}
+----
+
+== Interfaces, Dynamic Types & Limitations
+
+Les interfaces bien qu’utiles souffrent de quelques limitations
+
+[source, go]
+----
+func add(a, b interface{}) interface{}{
+	return a + b
+}
+
+----
+
+On aimerait une fonction add qui fonctionne sur les entiers et floats, mais interface est un type trop large.
+Et forcer le type avec un a.(int) comme précédemment, cela reporterait le problème sur le type de retour et nécessiterait de gérer tous les cas supportés.
+
+Pour gérer ces cas, on utilise les génériques.
+
+== Introducing Generics
+
+Pour ça, on ajoute un [T <type list>] pour gérer les types supportés. any permet d’accepter n’importe quel type.
+
+[source, go]
+----
+func add[T int | float64 | string](a, b T) T{
+	return a + b
+}
+
+----

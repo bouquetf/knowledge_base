@@ -5,3 +5,358 @@
 :source-highlighter: rouge
 :sectlinks:
 
+= Managing Related Data with Arrays, Slices & Maps
+
+== Module Introduction
+
+Autres types pour grouper des données ensembles :
+
+* Arrays & limitations
+* Slices
+* Maps
+
+== Introducing Arrays
+
+L’idée est de gérer un groupe de données de même type.
+
+[source, go]
+----
+func main() {
+	prices := [4]float64{10.99, 9.99, 45.99, 20.0}
+
+	fmt.Println(prices)
+}
+----
+
+Syntaxe: *[* <size> *]* <type> *{* <val1> *,* <val2>, ... *}*
+
+== Working with Arrays
+
+[source, go]
+----
+var productNames [4]string // déclaration
+
+productNames = [4]string{"A Book"} // possibilité de ne fixer qu’un sous ensemble de valeurs
+
+fmt.Println(prices[2]) // pour accéder à un élément donné
+
+productNames[2] = "A Carpet" // idem pour écrire une valeur
+----
+
+== Selecting Parts of Arrays With Slices
+
+Permettent d’extraire un sous Array en spécifiant les indexes à utiliser pour le début et la fin:
+
+[source, go]
+----
+featuredPrices:= prices[1:2]
+fmt.Println(featuredPrices)
+----
+
+== More Ways Of Selecting Slices
+
+POssibilité d’omètre un index:
+
+[source, go]
+----
+startPrices:= prices[:3]
+endPrices:= prices[2:]
+----
+
+Attention : on ne peut pas utiliser des indexes négatifs pour partir de la fin (comme c’est le cas dans d’autres langages)
+
+On a la possibilité de faire des slices dans un slice existant.
+
+== Diving Deeper Into Slices
+
+Les slices sont une sorte de fenêtre sur un Array, les valeurs ne sont pas copiées. Modifier un élément dans un slice modifie l’élément dans le Array correspondant.
+
+Chaque slice stock des métadonnées :
+* longueur (nombre d’items dans un slice) : len(slice)
+* capacité (nombre d’items que peut avoir un slice au maximum) : cap(slice)
+
+Note: on peut ajouter des éléments depuis la droite, mais jamais depuis la gauche.
+
+== Building Dynamic Lists With Slices
+
+On peut créer des arrays dynamiques en utilisant des slices. C’est utile lorsque l’on ne sait pas à l’avance combien d’éléments on va avoir dans l’Array.
+
+[source, go]
+----
+func main() {
+	prices := []float64{10.99, 8.99}
+
+	prices[1] = 9.99
+	prices[2] = 10.50 // erreur : on ne peut pas ajouter un élément à un index qui n’existe pas encore
+
+	append(prices, 5.99) // la façon pour ajouter un élément, retourne un nouveau slice qui se base sur un nouvel array
+}
+----
+
+Il n’existe pas de fonctionnalité pour supprimer un élément, pour ça, on utilisera des slices:
+
+[source, go]
+----
+prices = prices[1:]
+----
+
+== Exercise - Problem
+
+[source, go]
+----
+package main
+
+func main() {
+
+}
+
+// Time to practice what you learned!
+
+// 1) Create a new array (!) that contains three hobbies you have
+// 		Output (print) that array in the command line.
+// 2) Also output more data about that array:
+//		- The first element (standalone)
+//		- The second and third element combined as a new list
+// 3) Create a slice based on the first element that contains
+//		the first and second elements.
+//		Create that slice in two different ways (i.e. create two slices in the end)
+// 4) Re-slice the slice from (3) and change it to contain the second
+//		and last element of the original array.
+// 5) Create a "dynamic array" that contains your course goals (at least 2 goals)
+// 6) Set the second goal to a different one AND then add a third goal to that existing dynamic array
+// 7) Bonus: Create a "Product" struct with title, id, price and create a
+//		dynamic list of products (at least 2 products).
+//		Then add a third product to the existing list of products.
+----
+
+== Exercise - Solution
+
+[source, go]
+----
+package main
+
+import "fmt"
+
+type Product struct {
+	id    string
+	title string
+	price float64
+}
+
+func main() {
+	// 1)
+	hobbies := [3]string{"Sports", "Cooking", "Reading"}
+	fmt.Println(hobbies)
+
+	// 2)
+	fmt.Println(hobbies[0])
+	fmt.Println(hobbies[1:3])
+
+	// 3)
+	mainHobbies := hobbies[:2]
+	fmt.Println(mainHobbies)
+
+	//4
+	fmt.Println(cap(mainHobbies))
+	mainHobbies = mainHobbies[1:3]
+	fmt.Println(mainHobbies)
+
+	// 5
+	courseGoals := []string{"Learn Go!", "Learn all the basics"}
+	fmt.Println(courseGoals)
+
+	// 6
+	courseGoals[1] = "Learn all the basics and more"
+	courseGoals = append(courseGoals, "Learn all the basics!")
+	fmt.Println(courseGoals)
+
+	// 7
+	products := []Product{
+		{"first-product",
+			"A first product",
+			12.99},
+		{"second-product",
+			"A second product",
+			129.99},
+	}
+	fmt.Println(products)
+
+	newProduct := Product{
+		"third-product",
+		"A third product",
+		1299.99,
+	}
+
+	products = append(products, newProduct)
+
+	fmt.Println(products)
+}
+----
+
+== Unpacking List Values
+
+On cherche à merger des arrays. On peut utiliser append pour ce faire, mais il faut extraire les valeurs du deuxième tableau via l’opérateur "...". Ex: discountPrices...
+
+[source, go]
+----
+func main() {
+	prices := []float64{10.99, 8.99}
+	fmt.Println(prices[0:1])
+	prices[1] = 9.99
+
+	prices = append(prices, 5.99, 12.99, 29.99, 100.10)
+	prices = prices[1:]
+	fmt.Println(prices)
+
+	discountPrices := []float64{101.99, 80.99, 20.59}
+	prices = append(prices, discountPrices...)
+	fmt.Println(prices)
+}
+----
+
+== Introducing Maps
+
+Structure de données clé-valeur.
+
+Objectif:
+
+* Avoir une information plus parlante qu’une url (le nom de l’entreprise)
+* Avoir la possibilité de retrouver les éléments par un nom plus parlant qu’un index
+
+[source, go]
+----
+func main() {
+	websites := map[string]string{
+		"Google":"https://google.com",
+        "Amazon Web Services": "https://aws.com",
+	}
+    fmt.Println(websites)
+}
+----
+
+Syntaxe: map[type_key]type_values{optional key/value pairs}
+
+== Mutating Maps
+
+[source, go]
+----
+func main() {
+	websites := map[string]string{
+		"Google":              "https://google.com",
+		"Amazon Web Services": "https://aws.com",
+	}
+	fmt.Println(websites)
+	fmt.Println(websites["Amazon Web Services"])
+
+	websites["Linkedin"] = "https://linkedin.com"
+	fmt.Println(websites)
+
+	delete(websites, "Google")
+	fmt.Println(websites)
+}
+----
+
+== Maps vs. Structs
+
+Pourquoi les maps ?
+2 principales différences avec les structs:
+
+* On peut utiliser n’emporte quel type pour les clés dans les maps
+* Les maps résolvent un autre problème. Avec les structs, on a une structure prédéfinie que l’on ne peut plus modifier. Avec les maps, on peut rajouter ou enlever des paires clé/valeur.
+
+On utilise les structures pour représenter une entité de données dans notre programme.
+
+== Using The Special "make" Function
+
+Il est possible de créer un slice pour ajouter ensuite des éléments à un tableau. Go gèrera ensuite en interne l’allocation des éléments dans le tableau.
+
+[source, go]
+----
+func main() {
+	userNames := []string{}
+
+	userNames = append(userNames, "Max")
+	userNames = append(userNames, "Manuel")
+
+	fmt.Println(userNames)
+}
+----
+
+Il est possible de dire à l’avance à Go que l’on va créer un tableau de taille indéfinie avec le mot clef make auquel on lui donne le type de tableau et le nombre d’élément, et la capacité (nombre max d’éléments):
+
+[source, go]
+----
+func main() {
+	userNames := make([]string, 2, 5)
+
+	userNames[0] = "Julie"
+
+	userNames = append(userNames, "Max")
+	userNames = append(userNames, "Manuel")
+
+	fmt.Println(userNames)
+}
+----
+
+Fixer la capacité permet de pré-allouer la mémoire et protéger le tableau pour qu’on ne lui entre pas plus d’éléments que prévu.
+
+Sans make, go recrée un nouveau tableau à chaque fois que l’on ajoute un élément.
+
+== "make"ing Maps
+
+On peut utiliser make pour créer des maps
+
+[source, go]
+----
+func main() {
+    courseRatings := make(map[string]float64, 3)
+
+    courseRatings["go"] = 4.7
+    courseRatings["react"] = 4.8
+	courseRatings["angular"] = 4.7
+
+    fmt.Println(courseRatings)
+}
+----
+
+Si l’on ajoute un nouvel élément après les 3, go va devoir réalouer une map avec 4 éléments.
+
+== Working with Type Aliases
+
+Pour gagner en expérience de développement, on peut créer des alias. Par exemple pour éviter d’avoir à taper "make(map[string]float64, 3)" à chaque fois qu’on en a besoin.
+
+[source, go]
+----
+type floatMap map[string]float64
+
+func (m floatMap) output() {
+	fmt.Println(m)
+}
+
+func main() {
+    courseRatings := make(floatMap, 3)
+
+    courseRatings["go"] = 4.7
+    courseRatings["react"] = 4.8
+	courseRatings["angular"] = 4.7
+
+    courseRatings.output()
+}
+----
+
+== For Loops with Arrays, Slices & Maps
+
+Possibilité de parcourir des arrays, slices et maps grâce à for … range …:
+
+[source, go]
+----
+for index, value := range userNames {
+	fmt.Println("Index: ", index)
+	fmt.Println("Value: ", value)
+}
+
+for key, value := range courseRatings {
+	fmt.Println("Key: ", key)
+	fmt.Println("Value: ", value)
+}
+----

@@ -5,3 +5,174 @@
 :source-highlighter: rouge
 :sectlinks:
 
+
+= Fuctions: Deep Dive
+
+
+== Module Introduction
+
+Concepts avancés sur les fonctions :
+
+* Utiliser des fonctions comme valeurs
+* fonctions anonymes
+* récursion
+* Variatic functions
+
+== Functions as Values & Function Types
+
+Les fonctions sont des valeurs de première classe.
+
+Une fonction est un bout de code que l’on peut exécuter à la demande, on lui donne un nom, des paramètres et ça peut renvoyer une ou plusieurs valeurs.
+
+Les fonctions peuvent aussi être passées en paramètre.
+
+[source, go]
+----
+func main() {
+	numbers := []int{1, 2, 3, 4}
+	doubled := transformNumbers(&numbers, double)
+	tripled := transformNumbers(&numbers, triple)
+
+	fmt.Println(doubled)
+	fmt.Println(tripled)
+}
+
+func transformNumbers(numbers *[]int, transform func(int) int) []int {
+	dNumbers := []int{}
+	for _, val := range *numbers {
+		dNumbers = append(dNumbers, transform(val))
+	}
+	return dNumbers
+}
+
+func double(numbers int) int {
+	return numbers * 2
+}
+
+func triple(numbers int) int {
+	return numbers * 3
+}
+----
+
+Si la signature d’une fonction est un peu compliqué, on peut créer des alias de type :
+
+[source, go]
+----
+type transformFn func(int) int
+
+func transformNumbers(numpers *[]int, transform transformFn)
+----
+
+== Returning Functions As Values
+
+Les fonctions peuvent aussi retourner des fonctions. Notamment avec la possibilité d’utiliser des fonctions anonymes.
+
+[source, go]
+----
+func getTransformerFunction() transformFn {
+	return double
+}
+----
+
+== Introducing Anonymous Functions
+
+[source, go]
+----
+func main() {
+	numbers := []int{1, 2, 3, 4}
+	doubled := transformNumbers(&numbers, func (number int) int {
+		return number * 2
+	})
+
+	fmt.Println(doubled)
+}
+
+func transformNumbers(numbers *[]int, transform func(int) int) []int {
+	dNumbers := []int{}
+	for _, val := range *numbers {
+		dNumbers = append(dNumbers, transform(val))
+	}
+	return dNumbers
+}
+----
+
+== Understanding Closures
+
+On peut créer des fabriques de fonctions de cette façon :
+
+[source, go]
+----
+double := createTransformer(2)
+triple := createTransformer(3)
+
+func createTransformer(factor int) func (int) int {
+	return func(number int) int {
+		return number * factor
+	}
+}
+----
+
+Les closures sont le comportement d’enfermer les valeurs utilisées dans une fonction lors de sa construction comme avec
+createTransformer où le factor est locké à la création de la fonction retournée.
+
+== Making Sense Of Recursion
+
+Récursion : lorsqu’une fonction s’appelle elle même. Exemple: factorielle.
+
+[source, go]
+-----
+func main() {
+	fact := factorial(5)
+
+	fmt.Println(fact)
+}
+
+func factorial(number int) int {
+	if number == 1 {
+		return 1
+	}
+
+	return number * factorial(number-1)
+}
+-----
+
+== Using Variadic Functions
+
+Pour passer un nombre de paramètres non défini, il est possible d’utiliser les variadic functions.
+
+[source, go]
+-----
+func main() {
+	sum := sumup(1, 10, 15)
+
+	fmt.Println(sum)
+}
+
+func sumup(numbers ...int) int {
+	sum := 0
+
+	for _, val := range numbers {
+		sum = sum + val
+	}
+
+	return sum
+}
+-----
+
+== Splitting Slices Into Parameter Values
+
+Si l’on a un slice et que l’on veut l’exposer à une fonction qui viariadic, on peut utiliser un opérateur spécial go :
+
+[source, go]
+-----
+func main() {
+	numbers := []int{1, 10, 15}
+
+	sum := sumup(1, 10, 15, 40, -5)
+
+	anotherSum := sumup(numbers...)
+
+	fmt.Println(sum)
+	fmt.Println(anotherSum)
+}
+-----

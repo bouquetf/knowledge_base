@@ -5,3 +5,588 @@
 :source-highlighter: rouge
 :sectlinks:
 
+= Practice Project: Price Calculator
+
+== Module Introduction
+
+L’objectif de cette section pratique est de créer un outil qui calcule le priTTC pour une liste donnée de prix et de taux de taxes.
+
+Le projet va permettre de manipuler, les interfaces, structures, fonctions, méthodes, accès fichiers, packages multiples, …
+
+== Building a First, Basic Version Of The Program
+
+[source, go]
+----
+package main
+
+import "fmt"
+
+func main() {
+	prices := []float64{10, 20, 30}
+	taxRate := []float64{0, 0.07, 0.1, 0.15}
+
+	result := make(map[float64][]float64)
+
+	for _, taxRate := range taxRate {
+		taxIncludedPrices := make([]float64, len(prices))
+		for priceIndex, price := range prices {
+			taxIncludedPrices[priceIndex] = price * (1 + taxRate)
+		}
+		result[taxRate] = taxIncludedPrices
+	}
+
+	fmt.Println(result)
+}
+----
+
+== Setting Up A First Struct
+
+L’idée est d’extraire dans une nouvelle structure/package toute la logique de calcul des taxes.
+
+[source, go]
+----
+package prices
+
+type TaxIncludedPriceJob struct {
+	TaxRate           float64
+	InputPrices       []float64
+	TaxIncludedPrices map[string]float64
+}
+----
+
+== Adding a Constructor Function
+
+[source, go]
+----
+func NewTaxIncludedPriceJob(taxRate float64) *TaxIncludedPriceJob{
+	return &TaxIncludedPriceJob{
+		InputPrices:       []float64{10, 20, 30},
+		TaxRate:           taxRate
+	}
+}
+----
+
+== Adding a Method
+
+[source, go]
+----
+func (job TaxIncludedPriceJob) Process() {
+	result := make(map[string]float64)
+
+	for _, price := range job.InputPrices {
+		result[fmt.Sprintf("%.2f", price)] = price * (1 + job.TaxRate)
+	}
+
+	fmt.Println(result)
+}
+----
+
+[source, go]
+----
+func main() {
+	taxRate := []float64{0, 0.07, 0.1, 0.15}
+
+	for _, taxRate := range taxRate {
+		priceJob := prices.NewTaxIncludedPriceJob(taxRate)
+		priceJob.Process()
+	}
+}
+----
+
+== Loading Data From a File
+
+On crée un nouveau fichier "prices.txt" à la racine du projet pour contenir les différents prix. On importera ensuite ces prix dans notre programme en lisant le fichier.
+
+Scan lit le contenu ligne par ligne en maintenant un curseur en mémoire. Attention, s’il y a une erreur, il faut appeler scanner.Err() pour récupérer les erreurs éventuelles. Attention à bien fermer le fichier même en cas d’erreur.
+
+[source, go]
+----
+func (job TaxIncludedPriceJob) LoadData() {
+	file, err := os.Open("prices.txt")
+
+	if err != nil {
+		fmt.Println("Could not open file")
+		fmt.Println(err)
+		return
+	}
+
+	scanner := bufio.NewScanner(file)
+
+	var lines []string
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	err = scanner.Err()
+	if err != nil {
+		fmt.Println("Reading the file failed!")
+		fmt.Println(err)
+
+		file.Close()
+		return
+	}
+}
+----
+
+== Working With The File Data
+
+[source, go]
+----
+package prices
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+)
+
+type TaxIncludedPriceJob struct {
+	TaxRate           float64
+	InputPrices       []float64
+	TaxIncludedPrices map[string]float64
+}
+
+func (job *TaxIncludedPriceJob) LoadData() {
+	file, err := os.Open("prices.txt")
+
+	if err != nil {
+		fmt.Println("Could not open file")
+		fmt.Println(err)
+		return
+	}
+
+	scanner := bufio.NewScanner(file)
+
+	var lines []string
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	err = scanner.Err()
+	if err != nil {
+		fmt.Println("Reading the file failed!")
+		fmt.Println(err)
+
+		file.Close()
+		return
+	}
+
+	prices := make([]float64, len(lines))
+	for index, line := range lines {
+		floatPrice, err := strconv.ParseFloat(line, 64)
+
+		if err != nil {
+			fmt.Println("Parsing price failed!")
+			fmt.Println(err)
+			file.Close()
+			continue
+		}
+
+		prices[index] = floatPrice
+	}
+
+	job.InputPrices = prices
+	file.Close()
+}
+
+func (job TaxIncludedPriceJob) Process() {
+	job.LoadData()
+
+	result := make(map[string]string)
+
+	for _, price := range job.InputPrices {
+		taxIncludedPrice := price * (1 + job.TaxRate)
+		result[fmt.Sprintf("%.2f", price)] = fmt.Sprintf("%.2f", taxIncludedPrice)
+	}
+
+	fmt.Println(result)
+}
+
+func NewTaxIncludedPriceJob(taxRate float64) *TaxIncludedPriceJob {
+	return &TaxIncludedPriceJob{
+		InputPrices: []float64{10, 20, 30},
+		TaxRate:     taxRate,
+	}
+}
+----
+
+== Outsourcing Sharable Logic Into A Package
+
+On veut créer un nouveau package pour l’outillage de conversion string/float64.
+
+[source, go]
+----
+package conversion
+
+import (
+	"errors"
+	"strconv"
+)
+
+func StringsToFloats(strings []string) ([]float64, error) {
+	var floats []float64
+	for _, stringValue := range strings {
+		floatValue, err := strconv.ParseFloat(stringValue, 64)
+		if err != nil {
+			return nil, errors.New("Failed to convert string to float.")
+		}
+
+		floats = append(floats, floatValue)
+	}
+
+	return floats, nil
+}
+----
+
+Qui s’utilisera ainsi:
+
+[source, go]
+----
+func (job *TaxIncludedPriceJob) LoadData() {
+	file, err := os.Open("prices.txt")
+
+	if err != nil {
+		fmt.Println("Could not open file")
+		fmt.Println(err)
+		return
+	}
+
+	scanner := bufio.NewScanner(file)
+
+	var lines []string
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	err = scanner.Err()
+	if err != nil {
+		fmt.Println("Reading the file failed!")
+		fmt.Println(err)
+
+		file.Close()
+		return
+	}
+
+	prices, err := conversion.StringsToFloats(lines)
+
+	if err != nil {
+		fmt.Println(err)
+		file.Close()
+	}
+
+	job.InputPrices = prices
+	file.Close()
+}
+----
+
+== Outsourcing File Access Into A Package
+
+Même chose pour la manipulation des fichiers
+
+[source, go]
+----
+package filemanager
+
+import (
+	"bufio"
+	"errors"
+	"os"
+)
+
+func ReadLines(path string) ([]string, error) {
+	file, err := os.Open(path)
+
+	if err != nil {
+		return nil, errors.New("Failed to open File")
+	}
+
+	scanner := bufio.NewScanner(file)
+
+	var lines []string
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	err = scanner.Err()
+	if err != nil {
+		file.Close()
+		return nil, errors.New("Failed to read line in File")
+	}
+
+	file.Close()
+	return lines, nil
+}
+----
+
+Et à l’utilisation:
+
+[source, go]
+----
+func (job *TaxIncludedPriceJob) LoadData() {
+	lines, err := filemanager.ReadLines("prices.txt")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	prices, err := conversion.StringsToFloats(lines)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	job.InputPrices = prices
+}
+----
+
+== Storing JSON Data in Files
+
+[source, go]
+----
+func WriteJSON(path string, data any) error {
+	createdFile, err := os.Create(path)
+
+	if err != nil {
+		return errors.New("Failed to create file!")
+	}
+
+	encoderValue := json.NewEncoder(createdFile)
+	err = encoderValue.Encode(data)
+
+	if err != nil {
+		createdFile.Close()
+		return errors.New("Failed to encode data!")
+	}
+
+	createdFile.Close()
+	return nil
+}
+----
+
+Pour faire référence à n’importe quel type, on peut utiliser le type "interfaces{}" ou "any".
+
+Puis à l’utilisation :
+
+[source, go]
+----
+func (job TaxIncludedPriceJob) Process() {
+	job.LoadData()
+
+	result := make(map[string]string)
+
+	for _, price := range job.InputPrices {
+		taxIncludedPrice := price * (1 + job.TaxRate)
+		result[fmt.Sprintf("%.2f", price)] = fmt.Sprintf("%.2f", taxIncludedPrice)
+	}
+
+	job.TaxIncludedPrices = result
+
+	err := filemanager.WriteJSON(fmt.Sprintf("result_%.0f.json", job.TaxRate*100), job)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+----
+
+== Adding a FileManager Struct
+
+Pour rendre le code plus générique et réutilisable, on peut créer une structure pour encapsuler la gestion de fichiers.
+Notamment pour externaliser la configuration des paths d’accès aux fichiers directement dans le fichier main.go.
+
+On crée une structure ainsi qu’un constructeur que l’on peut ensuite utiliser directement.
+[source, go]
+----
+type FileManager struct {
+	inputFilePath  string
+	outputFilePath string
+}
+
+func New(inputFilePath, outputFilePath string) FileManager {
+	return FileManager{
+		inputFilePath:  inputFilePath,
+		outputFilePath: outputFilePath,
+	}
+}
+----
+
+[source, go]
+----
+type TaxIncludedPriceJob struct {
+	IOManager         filemanager.FileManager
+	TaxRate           float64
+	InputPrices       []float64
+	TaxIncludedPrices map[string]string
+}
+
+func NewTaxIncludedPriceJob(fm filemanager.FileManager, taxRate float64) *TaxIncludedPriceJob {
+	return &TaxIncludedPriceJob{
+		IOManager:   fm,
+		InputPrices: []float64{10, 20, 30},
+		TaxRate:     taxRate,
+	}
+}
+----
+
+[source, go]
+----
+func main() {
+	taxRate := []float64{0, 0.07, 0.1, 0.15}
+
+	for _, taxRate := range taxRate {
+		fm := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate))
+		priceJob := prices.NewTaxIncludedPriceJob(fm, taxRate*100)
+		priceJob.Process()
+	}
+}
+----
+
+== Adding & Using Struct Tags
+
+Il est possible d’ajouter des métadonnées aux champs des structures en utilisant ``.
+
+* json:"-" permet d’ignorer le champ
+* json:"tax_rate" permet d’utiliser l’id tax_rate dans le json généré
+
+
+[source, go]
+----
+type TaxIncludedPriceJob struct {
+	IOManager         filemanager.FileManager `json:"-"`
+	TaxRate           float64                 `json:"tax_rate"`
+	InputPrices       []float64               `json:"input_prices"`
+	TaxIncludedPrices map[string]string       `json:"tax_included_prices"`
+}
+----
+
+== Working on a Swappable Struct
+
+Externaliser dans une struct permet de remplacer le mécanisme d’input/output sans avoir à modifier le code du job en lui même.
+
+Par exemple, on peut créer une nouvelle logique pour lire et écrire les prix, en gardant la même signature des méthodes que filemanager.
+
+[source, go]
+----
+package cmdmanager
+
+import "fmt"
+
+type CmdManager struct {
+}
+
+func (fm CmdManager) ReadLines() ([]string, error) {
+	fmt.Println("Please enter your prices. Confirm every price with ENTER:")
+
+	var prices []string
+
+	for {
+		var price string
+		fmt.Print("Price: ")
+		fmt.Scan(&price)
+
+		if price == "0" {
+			break
+		}
+		prices = append(prices, price)
+	}
+
+	return prices, nil
+}
+
+func (fm CmdManager) WriteResult(data any) error {
+	fmt.Println(data)
+	return nil
+}
+
+func New() CmdManager {
+	return CmdManager{}
+}
+----
+
+Ce qui permet de créer un nouveau cmdmanager ainsi:
+
+[source, go]
+----
+cmdm := cmdmanager.New()
+----
+
+== Interfaces to the Rescue
+
+Malheureusement, on ne peut pas utiliser un cmdmanager à la place d’un filemanager directement. Il faut utiliser une interface pour uniformiser les utilisations.
+
+[source, go]
+----
+package iomanager
+
+type IOManager interface {
+	ReadLines() ([]string, error)
+	WriteResult(data interface{}) error
+}
+----
+
+[source, go]
+----
+func main() {
+	taxRate := []float64{0, 0.07, 0.1, 0.15}
+
+	for _, taxRate := range taxRate {
+		//fm := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate))
+		cmdm := cmdmanager.New()
+		priceJob := prices.NewTaxIncludedPriceJob(cmdm, taxRate*100)
+		priceJob.Process()
+	}
+}
+----
+
+== Error Handling
+
+On remonte les erreurs à l’appelant dans prices.go afin de centraliser le affichage.
+
+[source, go]
+----
+func (job *TaxIncludedPriceJob) LoadData() error {
+	lines, err := job.IOManager.ReadLines()
+
+	if err != nil {
+		return err
+	}
+
+	prices, err := conversion.StringsToFloats(lines)
+
+	if err != nil {
+		return err
+	}
+
+	job.InputPrices = prices
+	return nil
+}
+
+func (job TaxIncludedPriceJob) Process() error {
+	err := job.LoadData()
+
+	if err != nil {
+		return err
+	}
+
+	result := make(map[string]string)
+
+	for _, price := range job.InputPrices {
+		taxIncludedPrice := price * (1 + job.TaxRate)
+		result[fmt.Sprintf("%.2f", price)] = fmt.Sprintf("%.2f", taxIncludedPrice)
+	}
+
+	job.TaxIncludedPrices = result
+
+	err = job.IOManager.WriteResult(job)
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
+----

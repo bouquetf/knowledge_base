@@ -5,3 +5,348 @@
 :source-highlighter: rouge
 :sectlinks:
 
+= Concurrency - Running Tasks in Parallel
+
+== Module introduction
+
+Go est focus sur la concurrence, on va explorer ce concept dans le cadre de Go avec les routines pour exécuter des tâches en parallèle.
+On utilisera aussi les Channels et comment ils nous aident.
+Et en général, on verra des fonctionnalités qui nous permettent d’exécuter des tâches simultanément.
+
+== Introducing Goroutines
+
+Normalement, un programme Go s’exécute instruction après instruction dans l’ordre dans lequel elles sont écrites.
+Une fonction ne s’exécute que lorsque la précédente a terminé.
+Si une fonction prend du temps à s’exécuter, ça va bloquer tout le programme en attendant qu’elle termine.
+
+Dans certains cas, il est utile d’utiliser des exécutions parallèles afin d’optimiser la vitesse d’exécution. C’est là que les routines Go aident.
+
+== Running Functions as Goroutines
+
+Pour exécuter des fonctions en parallèle, il suffit d’ajouter le mot clef "go" avant son appel:
+
+[source, go]
+----
+func main() {
+	go greet("Nice to meet you!")
+	go greet("How are you?")
+	go slowGreet("How ... are ... you ...?")
+	go greet("I hope you're liking the course!")
+}
+----
+
+Le problème avec juste ce code, est que l’on ne voit pas l’output (avec println).
+
+== Understanding Goroutine Behavior
+
+Le mot clef "go" dispatch le début de l’exécution des fonctions en parallèle et leur exécution termine avant que l’affichage ne puisse s’exécuter, d’où le fait qu’on n’affiche rien.
+
+== Introducing & Using Channels
+
+La solution à ce problème est la notion de channels.
+Un channel est une sorte de valeur qui peut être utilisé comme channel de communication lorsque l’on travaille avec des routines go.
+
+L’idée est que le channel va transmettre certaines données, par exemple un booléen qui permet de savoir que la routine a terminé de s’exécuter.
+
+Lire cette valeur à la fin permet d’attendre que l’on reçoive une réponse avant de continuer
+
+[source, go]
+----
+func slowGreet(phrase string, doneChan chan bool) {
+	time.Sleep(3 * time.Second) // simulate a slow, long-taking task
+	fmt.Println("Hello!", phrase)
+	doneChan <- true
+}
+
+func main() {
+	done := make(chan bool)
+	go slowGreet("How ... are ... you ...?", done)
+	<- done
+}
+----
+
+Il est bien sûr possible de lire la valeur de done dans un fmt :  "fmt.Println(<- done)"
+
+== Working with Multiple Channels & Goroutines
+
+Il est possible d’utiliser le même channel pour synchroniser plusieurs routines :
+
+[source, go]
+----
+func greet(phrase string, doneChan chan bool) {
+	fmt.Println("Hello!", phrase)
+	doneChan <- true
+}
+
+func slowGreet(phrase string, doneChan chan bool) {
+	time.Sleep(3 * time.Second) // simulate a slow, long-taking task
+	fmt.Println("Hello!", phrase)
+	doneChan <- true
+}
+
+func main() {
+	done := make(chan bool)
+	go greet("Nice to meet you!", done)
+	go greet("How are you?", done)
+	go slowGreet("How ... are ... you ...?", done)
+	go greet("I hope you're liking the course!", done)
+	<-done
+}
+----
+
+Seulement, dès qu’on lit une valeur dans <- done, cela termine le programme. Il pourrait être possible d’appeler 4 fois <done mais ce n’est pas super.
+
+Une autre possibilité est d’utiliser un slice de channels.
+
+[source, go]
+----
+func main() {
+	dones := make([]chan bool, 4)
+
+	dones[0] = make(chan bool)
+	go greet("Nice to meet you!", dones[0])
+	dones[1] = make(chan bool)
+	go slowGreet("Nice to meet you!", dones[1])
+	dones[2] = make(chan bool)
+	go greet("I'm learning Go!", dones[2])
+	dones[3] = make(chan bool)
+	go slowGreet("I'm learning Go!", dones[3])
+
+	for _, done := range dones {
+		<-done
+	}
+}
+----
+
+Go fournit aussi une autre approche plus élégante
+
+[source, go]
+----
+func main() {
+	done := make(chan bool)
+
+	go greet("Nice to meet you!", done)
+	go slowGreet("Nice to meet you!", done)
+	go greet("I'm learning Go!", done)
+	go slowGreet("I'm learning Go!", done)
+
+	for doneChan := range done {
+		fmt.Println(doneChan)
+	}
+}
+----
+
+Seulement, à l’exécution, on a un message qui nous dit que les channels sont en état sleep.
+On loop sur les  valeurs mais go ne sait pas quand un channel a fini de recevoir des informations.
+
+Il est possible de fermer un channel avec close(channel). Fermer le channel le plus lent suffit à corriger le problème.
+
+[source, go]
+----
+func slowGreet(phrase string, doneChan chan bool) {
+	time.Sleep(3 * time.Second) // simulate a slow, long-taking task
+	fmt.Println("Hello!", phrase)
+	doneChan <- true
+	close(doneChan)
+}
+----
+
+Cela ne fonctionne que si on connaît les channels qui sont les plus lents.
+
+== Goroutines & Channels in a Project
+
+Imaginons que les écritures prennent beaucoup de temps dans le projet de la section 9.
+
+Lors de l’appel de priceJob.process(), il est possible de l’appeler en routine. Cependant, l’erreur n’est pas renvoyée par une routine go.
+
+[source, go]
+----
+func main() {
+	taxRate := []float64{0, 0.07, 0.1, 0.15}
+	doneChans := make([]chan bool, len(taxRate))
+
+	for index, taxRate := range taxRate {
+		doneChans[index] = make(chan bool)
+		iom := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate))
+		//iom := cmdmanager.New()
+		priceJob := prices.NewTaxIncludedPriceJob(iom, taxRate*100)
+		go priceJob.Process(doneChans[index])
+	}
+
+	for _, doneChan := range doneChans {
+		<-doneChan
+	}
+}
+----
+
+[source, go]
+----
+func (job TaxIncludedPriceJob) Process(doneChan chan bool) {
+	err := job.LoadData()
+
+	result := make(map[string]string)
+
+	for _, price := range job.InputPrices {
+		taxIncludedPrice := price * (1 + job.TaxRate)
+		result[fmt.Sprintf("%.2f", price)] = fmt.Sprintf("%.2f", taxIncludedPrice)
+	}
+
+	job.TaxIncludedPrices = result
+
+	err = job.IOManager.WriteResult(job)
+
+	doneChan <- true
+}
+----
+
+== Setting Up An Error Channel
+
+Pour la gestion d’erreur, il est possible d’ajouter un channel dédié à la remontée d’erreur.
+
+[source, go]
+----
+func (job TaxIncludedPriceJob) Process(doneChan chan bool, errorChan chan error) {
+	err := job.LoadData()
+
+	if err != nil {
+		errorChan <- err
+		return
+	}
+
+	result := make(map[string]string)
+
+	for _, price := range job.InputPrices {
+		taxIncludedPrice := price * (1 + job.TaxRate)
+		result[fmt.Sprintf("%.2f", price)] = fmt.Sprintf("%.2f", taxIncludedPrice)
+	}
+
+	job.TaxIncludedPrices = result
+
+	err = job.IOManager.WriteResult(job)
+
+	if err != nil {
+		errorChan <- err
+		return
+	}
+
+	doneChan <- true
+}
+----
+
+[source, go]
+----
+func main() {
+	taxRate := []float64{0, 0.07, 0.1, 0.15}
+	doneChans := make([]chan bool, len(taxRate))
+	errorChans := make([]chan error, len(taxRate))
+
+	for index, taxRate := range taxRate {
+		doneChans[index] = make(chan bool)
+		errorChans[index] = make(chan error)
+		iom := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate))
+		//iom := cmdmanager.New()
+		priceJob := prices.NewTaxIncludedPriceJob(iom, taxRate*100)
+		go priceJob.Process(doneChans[index], errorChans[index])
+	}
+
+	for _, errorChan := range errorChans {
+		<-errorChan
+	}
+
+	for _, doneChan := range doneChans {
+		<-doneChan
+	}
+}
+----
+
+Seulement, cette solution ne fonctionne pas étant donné que l’on ne peut avoir en même temps un errorChan et un doneChan effecté au même moment, donc si l’on attend l’un, l’autre n’arrive jamais, et on a une erreur à l’exécution.
+
+== Managing Channels with the "select" Statement
+
+Lorsque l’on a plusieurs channels comme au chapitre précédent, go arrive avec une nouvelle structure de contrôle : select.
+
+Dans ce cas, il faut itérer sur toutes les procédures (ici nos taux de taxes) et utiliser le select pour traiter les erreurs éventuelles ou gérer le résultat de la fonction.
+
+[source, go]
+----
+func main() {
+	taxRate := []float64{0, 0.07, 0.1, 0.15}
+	doneChans := make([]chan bool, len(taxRate))
+	errorChans := make([]chan error, len(taxRate))
+
+	for index, taxRate := range taxRate {
+		doneChans[index] = make(chan bool)
+		errorChans[index] = make(chan error)
+		iom := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate))
+		//iom := cmdmanager.New()
+		priceJob := prices.NewTaxIncludedPriceJob(iom, taxRate*100)
+		go priceJob.Process(doneChans[index], errorChans[index])
+	}
+
+	for index := range taxRate {
+		select {
+		case err := <-errorChans[index]:
+			if err != nil {
+				fmt.Println(err)
+			}
+		case <-doneChans[0]:
+			fmt.Println("Done")
+		}
+	}
+}
+----
+
+== Deferring Code Execution with "defer"
+
+Lorsque l’on a à manipuler les fichiers par exemple, il faut à terme utiliser un close sur ce fichier pour le fermer. Or, jusqu’à maintenant, on a appelé close à chaque fois que la fonction ReadLines() pouvait terminer.
+
+Pour contrer cette duplication, on peut utiliser le mot clef defer ainsi :
+
+[source, go]
+----
+func (fm FileManager) ReadLines() ([]string, error) {
+	file, err := os.Open(fm.inputFilePath)
+
+	if err != nil {
+		return nil, errors.New("Failed to open File")
+	}
+
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	var lines []string
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	err = scanner.Err()
+	if err != nil {
+		return nil, errors.New("Failed to read line in File")
+	}
+
+	return lines, nil
+}
+
+func (fm FileManager) WriteResult(data any) error {
+	createdFile, err := os.Create(fm.outputFilePath)
+
+	if err != nil {
+		return errors.New("Failed to create file!")
+	}
+
+	defer createdFile.Close()
+
+	time.Sleep(3 * time.Second)
+
+	encoderValue := json.NewEncoder(createdFile)
+	err = encoderValue.Encode(data)
+
+	if err != nil {
+		return errors.New("Failed to encode data!")
+	}
+
+	return nil
+}
+----
